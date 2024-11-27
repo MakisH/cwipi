@@ -69,7 +69,7 @@
 
 using namespace std;
 
-static void 
+static void
 _check_cpl_consistency
 (
   const CWP_Interface_t      entities_dim,
@@ -1275,7 +1275,7 @@ namespace cwipi {
    *
    */
 
-  void 
+  void
   Coupling::exportMesh(Coupling &cpl)
   {
 
@@ -1413,7 +1413,7 @@ namespace cwipi {
 
         MPI_Scan (&n_part, &g_n_part, 1, MPI_INT, MPI_SUM, cpl._localCodeProperties.connectableCommGet());
 
-        g_n_part += -n_part;        
+        g_n_part += -n_part;
 
         for(int i_part= 0 ; i_part < cpl._mesh.getNPart(); i_part++){
           partitioning_field_data[i_part] = (double*) malloc(cpl._mesh.getPartNElts(i_part) * sizeof(double) );
@@ -1475,9 +1475,9 @@ namespace cwipi {
 
         // Geometry
         if (cpl._displacement == CWP_DYNAMIC_MESH_VARIABLE) {
-        
 
-          PDM_writer_geom_set_from_mesh_nodal (cpl._writer, 
+
+          PDM_writer_geom_set_from_mesh_nodal (cpl._writer,
                                                cpl._id_geom_writer,
                                                cpl._mesh.getPdmNodalIndex());
 
@@ -1644,7 +1644,7 @@ namespace cwipi {
         if (codeID < cplCodeID) {
 
           exportMesh(*this);
-          exportMesh(cpl_cpl);   
+          exportMesh(cpl_cpl);
 
         }
       }
@@ -2200,9 +2200,9 @@ namespace cwipi {
 
                       _spatial_interp_send.insert(make_pair(newKey, FG::getInstance().CreateObject(_spatialInterpAlgo)));
                       cpl_cpl._spatial_interp_recv.insert(make_pair(cpl_newKey, FG::getInstance().CreateObject(cpl_cpl._spatialInterpAlgo)));
-              
+
                       _spatial_interp_send[newKey]->init(this, localFieldLocation, cplFieldsLocationV[j], SPATIAL_INTERP_EXCH_SEND);
-                      cpl_cpl._spatial_interp_recv[cpl_newKey]->init(&cpl_cpl, cplFieldsLocationV[j], localFieldLocation, SPATIAL_INTERP_EXCH_RECV);        
+                      cpl_cpl._spatial_interp_recv[cpl_newKey]->init(&cpl_cpl, cplFieldsLocationV[j], localFieldLocation, SPATIAL_INTERP_EXCH_RECV);
 
                     }
                   }
@@ -2266,29 +2266,29 @@ namespace cwipi {
                                                                      (void *) &cpl_sis_r);
 
           int sir_s = (int) _spatial_interp_recv.size();
-    
+
           vector<CWP_Dof_location_t> sir_loc;
           sir_loc.reserve(2*sis_r);
-    
+
           std::map < std::pair < CWP_Dof_location_t, CWP_Dof_location_t >, SpatialInterp*>::iterator sir_it = _spatial_interp_recv.begin();
           while(sir_it != _spatial_interp_recv.end()) {
             sir_loc.push_back((sir_it->first).first);
             sir_loc.push_back((sir_it->first).second);
             sir_it++;
           }
-    
+
           int cpl_sir_s = (int) cpl_cpl._spatial_interp_recv.size();
-    
+
           vector<CWP_Dof_location_t> cpl_sir_loc;
           cpl_sir_loc.reserve(2*cpl_sir_s);
-    
+
           sir_it = cpl_cpl._spatial_interp_recv.begin();
           while(sir_it != cpl_cpl._spatial_interp_recv.end()) {
             cpl_sir_loc.push_back((sir_it->first).first);
             cpl_sir_loc.push_back((sir_it->first).second);
             sir_it++;
           }
-    
+
           int sir_r;
           int cpl_sir_r;
 
@@ -2309,7 +2309,7 @@ namespace cwipi {
           _sis_loc_r.resize(2*sir_s);
 
           _cpl_sis_loc_r.resize(2*cpl_sir_s);
-    
+
           assert(sir_r     == sis_s);
           assert(sis_r     == sir_s);
           assert(cpl_sir_r == cpl_sis_s);
@@ -2324,13 +2324,13 @@ namespace cwipi {
                                                                      (void *) &(_sis_loc_r[0]),
                                                                      2*cpl_sis_r,
                                                                      (void *) &(_cpl_sis_loc_r[0]));
-    
+
           vector<CWP_Dof_location_t> sir_loc_r;
           sir_loc_r.resize(2*sis_s);
 
           vector<CWP_Dof_location_t> cpl_sir_loc_r;
           cpl_sir_loc_r.resize(2*cpl_sis_s);
-    
+
           _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Dof_location_t),
                                                                      2*sir_s,
                                                                      (void *) &(sir_loc[0]),
@@ -2345,7 +2345,7 @@ namespace cwipi {
         int clear_data = (_n_step > 0);//(_displacement == CWP_DYNAMIC_MESH_VARIABLE && _n_step > 0);
 
         if (codeID < cplCodeID) {
-  
+
           int i = 0;
           std::map < std::pair < CWP_Dof_location_t, CWP_Dof_location_t >, SpatialInterp*>::iterator sis_it = _spatial_interp_send.begin();
           while(sis_it != _spatial_interp_send.end()) {
@@ -2367,7 +2367,7 @@ namespace cwipi {
             sis_it++;
             i++;
           }
-  
+
           i = 0;
           sis_it = cpl_cpl._spatial_interp_send.begin();
           while(sis_it != cpl_cpl._spatial_interp_send.end()) {
@@ -2392,7 +2392,7 @@ namespace cwipi {
         }
 
         else {
-  
+
           int i = 0;
           std::map < std::pair < CWP_Dof_location_t, CWP_Dof_location_t >, SpatialInterp*>::iterator sis_it = cpl_cpl._spatial_interp_send.begin();
           while(sis_it != cpl_cpl._spatial_interp_send.end()) {
@@ -2414,7 +2414,7 @@ namespace cwipi {
             sis_it++;
             i++;
           }
-  
+
           i = 0;
           sis_it = _spatial_interp_send.begin();
           while(sis_it != _spatial_interp_send.end()) {
@@ -2524,12 +2524,12 @@ namespace cwipi {
       if     ( _displacement == CWP_DYNAMIC_MESH_STATIC     ) {
         pdm_topology  = PDM_WRITER_TOPO_CST;
       }
-      
+
       else if( _displacement == CWP_DYNAMIC_MESH_DEFORMABLE ) {
         pdm_topology  = PDM_WRITER_TOPO_DEFORMABLE;
       }
 
-      else { 
+      else {
         pdm_topology  = PDM_WRITER_TOPO_VARIABLE;
       }
 
@@ -2539,7 +2539,7 @@ namespace cwipi {
       const char *options_comp          = "";
       //Proportion of working node for file acess
       int working_node = 1;
-  
+
       PDM_io_kind_t acess_type =   PDM_IO_KIND_MPI_SIMPLE;
 
       std::string str_options = format_option;
@@ -2566,7 +2566,7 @@ namespace cwipi {
         else if (option != "") {
           PDM_error(__FILE__, __LINE__, 0,
                     "Not a valid visualization option.\n");
-        } 
+        }
 
       }
       while (pos != std::string::npos);
@@ -2678,7 +2678,7 @@ namespace cwipi {
                                               storage,
                                               n_component,
                                               exch_type,
-                                              visu_status);  
+                                              visu_status);
 
     pair<string, Field* > newPair(string(field_id), newField);
     string localName = _localCodeProperties.nameGet();
@@ -2896,7 +2896,8 @@ namespace cwipi {
         it2 = _spatial_interp_send.find(newKey);
 
         if (it2 == _spatial_interp_send.end()) {
-          PDM_error(__FILE__, __LINE__, 0, "\nUnknown spatial interpolation\n");
+          PDM_error(__FILE__, __LINE__, 0, "\nUnknown spatial interpolation for field %s (%d -> %d)\n",
+                    sendingFieldID.c_str(), localFieldLocation, cplFieldLocation);
         }
         else {
           it2->second->issend(sendingField);
@@ -3101,7 +3102,8 @@ namespace cwipi {
         it2 = _spatial_interp_recv.find(newKey);
 
         if (it2 == _spatial_interp_recv.end()) {
-          PDM_error(__FILE__, __LINE__, 0, "\nUnknown spatial interpolation\n");
+          PDM_error(__FILE__, __LINE__, 0, "\nUnknown spatial interpolation for field %s (%d -> %d)\n",
+                    receivingFieldID.c_str(), localFieldLocation, cplFieldLocation);
         }
         else {
           it2->second->irecv(receivingField);

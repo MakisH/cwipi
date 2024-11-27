@@ -467,7 +467,6 @@ def runTest():
         print("cpl.user_tgt_pts_set:\n")
 
         cpl.user_tgt_pts_set(0,
-                             2,
                              coord,
                              None)
 

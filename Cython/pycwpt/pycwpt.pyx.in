@@ -28,8 +28,6 @@ pycwpt - Coupling With Interpolation Parallel Interface library.
 # --> Python
 import numpy     as np
 from mpi4py import MPI
-import ctypes
-import sys
 
 # --> Cython
 cimport cython
