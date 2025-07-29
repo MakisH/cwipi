@@ -694,7 +694,7 @@ cdef extern from "Python.h":
   int PyTraceMalloc_Untrack(unsigned int domain, uintptr_t ptr)
 
 # General
-cdef void dealloc_array_capsule(object capsule):
+cdef void dealloc_array_capsule(object capsule) noexcept:
     data = PyCapsule_GetPointer(capsule, NULL)
     PyTraceMalloc_Untrack(py_mem_domain, <uintptr_t> data)
     free(data)
@@ -899,7 +899,7 @@ def codes_list_get():
       Names of codes known by CWIPI (str list)
     """
 
-    cdef char** c_code_list = CWP_client_Codes_list_get()
+    cdef char** c_code_list = <char**> CWP_client_Codes_list_get()
 
     cdef int n_code = CWP_client_Codes_nb_get()
     code_list = []
@@ -930,7 +930,7 @@ def loc_codes_list_get():
       Number of local codes known by CWIPI (int)
     """
 
-    cdef char** c_loc_code_list = CWP_client_Loc_codes_list_get()
+    cdef char** c_loc_code_list = <char**> CWP_client_Loc_codes_list_get()
 
     cdef int n_loc_code = CWP_client_Loc_codes_nb_get()
     loc_code_list = []
@@ -1235,7 +1235,7 @@ def param_reduce(CWP_Op_t    op,
                               data_type,
                               &(int_res),
                               n_code,
-                              c_code_names)
+                              <const char**> c_code_names)
       free(c_code_names)
       return int_res
 
@@ -1245,7 +1245,7 @@ def param_reduce(CWP_Op_t    op,
                               data_type,
                               &(dbl_res),
                               n_code,
-                              c_code_names)
+                              <const char**> c_code_names)
       free(c_code_names)
       return dbl_res
 
@@ -1255,7 +1255,7 @@ def param_reduce(CWP_Op_t    op,
                               data_type,
                               &(str_res),
                               n_code,
-                              c_code_names)
+                              <const char**> c_code_names)
       free(c_code_names)
     return str_res
 

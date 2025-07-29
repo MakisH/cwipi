@@ -911,7 +911,7 @@ def init(MPI.Comm global_comm,
 
     CWP_Init(c_global_comm,
              n_code,
-             c_code_names,
+             <const char**> c_code_names,
              <CWP_Status_t> is_active_rank,
              intra_comms)
 
@@ -1083,7 +1083,7 @@ def codes_list_get():
       Names of codes known by CWIPI (str list)
     """
 
-    cdef char** c_code_list = CWP_Codes_list_get()
+    cdef char** c_code_list = <char**> CWP_Codes_list_get()
 
     cdef int n_code = CWP_Codes_nb_get()
     code_list = []
@@ -1115,7 +1115,7 @@ def loc_codes_list_get():
       Names of local codes known by CWIPI (str list)
     """
 
-    cdef char** c_loc_code_list = CWP_Loc_codes_list_get()
+    cdef char** c_loc_code_list = <char**> CWP_Loc_codes_list_get()
 
     cdef int n_loc_code = CWP_Loc_codes_nb_get()
     loc_code_list = []
@@ -1430,7 +1430,7 @@ def param_reduce(CWP_Op_t    op,
                        data_type,
                        &(int_res),
                        n_code,
-                       c_code_names)
+                       <const char**> c_code_names)
       free(c_code_names)
       return int_res
 
@@ -1440,7 +1440,7 @@ def param_reduce(CWP_Op_t    op,
                        data_type,
                        &(dbl_res),
                        n_code,
-                       c_code_names)
+                       <const char**> c_code_names)
       free(c_code_names)
       return dbl_res
 
@@ -1450,7 +1450,7 @@ def param_reduce(CWP_Op_t    op,
                        data_type,
                        &(str_res),
                        n_code,
-                       c_code_names)
+                       <const char**> c_code_names)
       free(c_code_names)
       return str_res
 
