@@ -882,7 +882,7 @@ def init(MPI.Comm global_comm,
     Parameters:
       global_comm    (MPI.Comm)    : MPI global communicator
       code_names     (str list)    : Names of codes on the current rank (size = number of codes on current MPI rank)
-      is_active_rank (int)         : Is current rank have to be used by CWIPI
+      is_active_rank (int)         : Current rank is to be used by CWIPI
 
     Returns:
       MPI intra-communicators of each code (size = number of codes on current MPI rank) (MPI.Comm list)
@@ -1505,7 +1505,7 @@ cdef class PartData (object):
         __init__(local_code_name, cpl_id, part_data_id, exch_type, gnum_elt)
         Initialize a :py:class:`PartData` object.
 
-        .. warning:: PartData creation should be done using :py:meth:`Coupling.part_data_create`
+        .. warning:: PartData should be created using :py:meth:`Coupling.part_data_create` and explicity deleted before calling :py:meth:`finalize()`.
 
         Parameters:
           local_code_name (str)                             : Local code name
@@ -1706,7 +1706,7 @@ cdef class Field (object):
         __init__(local_code_name, cpl_id, field_id, data_type, storage, n_component, target_location, exch_type, visu_status)
         Initialize a :py:class:`Field` object.
 
-        .. warning:: Field creation should be done using :py:meth:`Coupling.field_create`
+        .. warning:: Field should be created using :py:meth:`Coupling.field_create` and explicity deleted before calling :py:meth:`finalize()`.
 
         Parameters:
           local_code_name (str)                 : Local code name
@@ -2473,6 +2473,8 @@ cdef class Coupling (object):
         """
         __init__(local_code_name, cpl_id, coupled_code_name, entities_dim, comm_type, spatial_interp, n_part, displacement, recv_freq_type)
         Initialize a :py:class:`Coupling` object.
+
+        .. warning:: Coupling should be explicity deleted before calling :py:meth:`finalize()`.
 
         Parameters:
           local_code_name   (str)                  : Local code name
@@ -3345,8 +3347,8 @@ cdef class Coupling (object):
 
         Parameters:
            i_part     (int)                        : Current partition
-           coord      (np.ndarray[np.double_t])    : Coordinates (size = 3 * ``n_pts``)
-           global_num (np.ndarray[npy_cwp_gnum_t]) : Global number or None (size = ``n_pts``)
+           coord      (np.ndarray[np.double_t])    : Coordinates (size = 3 * *n_pts*)
+           global_num (np.ndarray[npy_cwp_gnum_t]) : Global number or None (size = *n_pts*)
         """
 
         if len(coord)%3 != 0:

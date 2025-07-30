@@ -771,7 +771,7 @@ def init(MPI.Comm global_comm,
       global_comm    (MPI.Comm)  : MPI global communicator
       config         (str)       : path to server configuration file
       code_name      (str)       : name of local code
-      is_active_rank (int)       : Does current rank have to be used by CWIPI
+      is_active_rank (int)       : current rank is to be used by CWIPI
     """
 
     cdef MPI.MPI_Comm c_global_comm = global_comm.ob_mpi
@@ -907,8 +907,6 @@ def codes_list_get():
 
     code_list = np.array(code_list)
 
-    free(c_code_list)
-
     return code_list
 
 def loc_codes_nb_get():
@@ -939,8 +937,6 @@ def loc_codes_list_get():
       loc_code_list.append(c_loc_code_list[i])
 
     loc_code_list = np.array(loc_code_list)
-
-    free(c_loc_code_list)
 
     return loc_code_list
 
@@ -1313,7 +1309,7 @@ cdef class PartData (object):
         __init__(local_code_name, cpl_id, part_data_id, exch_type, gnum_elt)
         Initialize a :py:class:`PartData` object.
 
-        .. warning:: PartData creation should be done using :py:meth:`Coupling.part_data_create`
+        .. warning:: PartData should be created using :py:meth:`Coupling.part_data_create` and explicity deleted before calling :py:meth:`finalize()`.
 
         Parameters:
           local_code_name (str)                             : Local code name
@@ -1344,12 +1340,8 @@ cdef class PartData (object):
                           <CWP_g_num_t **> self._gnum_elt,
                           <int   *> self.n_elt,
                                     self.n_part)
-        free(self.n_elt)
-        free(self._gnum_elt)
 
-    # TODO should work with __del__ but a leak remains
-    # in __dealloc__ Python object might already partially destroyed
-    def __dealloc__(self):
+    def __del__(self):
         """
         Delete a :py:class:`PartData` object.
         """
@@ -1481,7 +1473,7 @@ cdef class Field (object):
         __init__(local_code_name, cpl_id, field_id, data_type, storage, n_component, target_location, exch_type, visu_status)
         Initialize a :py:class:`Field` object.
 
-        .. warning:: Field creation should be done using :py:meth:`Coupling.field_create`
+        .. warning:: Field should be created using :py:meth:`Coupling.field_create` and explicity deleted before calling :py:meth:`finalize()`.
 
         Parameters:
           local_code_name (str)                 : Local code name
@@ -1838,6 +1830,8 @@ cdef class Coupling (object):
         """
         __init__(local_code_name, cpl_id, coupled_code_name, entities_dim, comm_type, spatial_interp, n_part, displacement, recv_freq_type)
         Initialize a :py:class:`Coupling` object.
+
+        .. warning:: Coupling should be explicity deleted before calling :py:meth:`finalize()`.
 
         Parameters:
           local_code_name   (str)                  : Local code name

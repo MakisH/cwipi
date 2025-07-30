@@ -171,7 +171,7 @@ unit_test:
     - export SLURM_EXACT=1
     - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build$MATRIX_KEY
-    - ./cwp_run -ics -timeout 2 # Plante sur juno openmpi
+    - ./cwp_run -ics -timeout 2
   after_script:
     - echo $PWD
     - cd $CI_PROJECT_DIR
@@ -191,7 +191,7 @@ job:coverage_report:
     - export SLURM_EXACT=1
     - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build_coverage
-    - ./cwp_run -srun -ics -timeout 2
+    - ./cwp_run -ics -timeout 2
     - cd $CUSTOM_CI_DIR/build_coverage/src/CMakeFiles/cwp.dir/new
     - gcov -b -l -p -c *.gcno
     - cd $CUSTOM_CI_DIR/build_coverage

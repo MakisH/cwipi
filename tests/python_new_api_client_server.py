@@ -47,7 +47,7 @@ def runTest():
         os.system("mkdir -p python_new_api_client_server_o/code2")
         os.system("rm -f ./python_new_api_client_server_o/code1/cwp_config_srv.txt")
         os.system("rm -f ./python_new_api_client_server_o/code2/cwp_config_srv.txt")
-        os.system("mpiexec -n 1 cwp_server -cn code0 -p 49100 49100 -c \"python_new_api_client_server_o/code1/cwp_config_srv.txt\" : -n 1  cwp_server -cn code1 -p 49101 49101 -c \"python_new_api_client_server_o/code2/cwp_config_srv.txt\" &")
+        os.system("mpiexec $Oversubscribe -n 1 cwp_server -cn code0 -p 49100 49100 -c \"python_new_api_client_server_o/code1/cwp_config_srv.txt\" : -n 1 cwp_server -cn code1 -p 49101 49101 -c \"python_new_api_client_server_o/code2/cwp_config_srv.txt\" &")
 
     while (os.access(config, os.R_OK) != 0):
         time.sleep(1)
@@ -181,6 +181,8 @@ def runTest():
     print("pycwpclt.param_get ({param}):\n".format(param=i_rank))
     value = pycwpclt.param_get(code_names[i_rank], "entier", pycwpclt.INT)
     print("  - value int: {param}\n".format(param=value))
+
+    comm.Barrier() # necessary here before reduce
 
     print("pycwpclt.param_reduce:\n")
     result = pycwpclt.param_reduce(pycwpclt.OP_MIN, "entier",  pycwpclt.INT, 2, code_names)
@@ -343,6 +345,7 @@ def runTest():
         print("cpl.mesh_interf_del:\n")
 
         cpl.mesh_interf_del()
+        del cpl
 
     # std or polygon
     elif (polygon and not ho):
