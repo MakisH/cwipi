@@ -62,38 +62,23 @@ target_include_directories(cwp
                            PUBLIC    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bft>
                            PUBLIC    $<INSTALL_INTERFACE:include/>
                            PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/meshgen>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/struct>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/io>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/pario>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ppart>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/util>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/adapt>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/algorithm>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/exchange_protocol>
                            PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ext_wrapper>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mpi_wrapper>)
-
-if (NOT CWP_ENABLE_EXTERNAL_PDM)
-
-#  add_library(pdm OBJECT ${SOURCESPDM})
-
-#  target_include_directories(pdm
-#                             PRIVATE $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/meshgen>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/struct>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/io>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/pario>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ppart>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/util>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ext_wrapper>
-#                             PRIVATE $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mpi_wrapper>)
-#
-#  add_dependencies(cwp pdm)
-#  get_target_property(PDM_INC pdm INCLUDE_DIRECTORIES)
-#  target_include_directories(cwp PRIVATE ${PDM_INC})
-
-endif()
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/geometry>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gnum_utils>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gpu>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/io>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_struct>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_topology>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/meshgen>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mpi_wrapper>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ppart>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/struct>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/test_utils>
+                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/util>)
 
 if (CWP_ENABLE_Fortran)
 
@@ -110,15 +95,23 @@ if (CWP_ENABLE_Fortran)
                              PUBLIC    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bft>
                              PUBLIC    $<INSTALL_INTERFACE:include/>
                              PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/meshgen>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/struct>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/io>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/pario>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ppart>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/util>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/adapt>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/algorithm>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/exchange_protocol>
                              PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ext_wrapper>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mpi_wrapper>)
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/geometry>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gnum_utils>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gpu>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/io>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_struct>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_topology>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/meshgen>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mpi_wrapper>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ppart>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/struct>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/test_utils>
+                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/util>)
 
   add_dependencies(cwpf cwp)
 
