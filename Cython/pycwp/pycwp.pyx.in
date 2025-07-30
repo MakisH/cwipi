@@ -1093,6 +1093,8 @@ def codes_list_get():
       py_code_list = c_code_list[i]
       code_list.append(py_code_list)
 
+    free(c_code_list)
+
     return code_list
 
 def loc_codes_nb_get():
@@ -1124,6 +1126,8 @@ def loc_codes_list_get():
     for i in range(n_loc_code):
       py_loc_code_list = c_loc_code_list[i]
       loc_code_list.append(py_loc_code_list)
+
+    free(c_loc_code_list)
 
     return loc_code_list
 
@@ -1538,6 +1542,8 @@ cdef class PartData (object):
         CWP_Part_data_del(self.local_code_name,
                           self.cpl_id,
                           self.part_data_id)
+        free(self.n_elt)
+        free(self._gnum_elt)
 
     # --> DATA
     def issend(self,

@@ -474,6 +474,7 @@ def runTest():
         print("cpl.mesh_interf_del:\n")
 
         cpl.mesh_interf_del()
+        del cpl
 
     else:
         # STD MESH
@@ -513,6 +514,7 @@ def runTest():
         print("cpl.mesh_interf_del:\n")
 
         cpl.mesh_interf_del()
+        del cpl
 
     # Volumic Cpl
     print("pycwpclt.Coupling:\n")
@@ -572,6 +574,7 @@ def runTest():
     print("cpl2.mesh_interf_del:\n", flush=True)
 
     cpl2.mesh_interf_del()
+    del cpl2
 
     # FINALIZE
     pycwpclt.finalize()

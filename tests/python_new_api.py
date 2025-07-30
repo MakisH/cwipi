@@ -394,6 +394,7 @@ def runTest():
         f.write("cpl.mesh_interf_del:\n")
         f.flush()
         cpl.mesh_interf_del()
+        del cpl
 
     else:
 
@@ -434,6 +435,7 @@ def runTest():
         f.write("cpl.mesh_interf_del:\n")
         f.flush()
         cpl.mesh_interf_del()
+        del cpl
 
     # ------------------------------------------------------------------
     # Volumic Cpl
@@ -494,6 +496,7 @@ def runTest():
     f.write("cpl2.mesh_interf_del:\n")
     f.flush()
     cpl2.mesh_interf_del()
+    del cpl2
 
     # ------------------------------------------------------------------
     # High-order
@@ -550,6 +553,7 @@ def runTest():
     f.write("cpl3.mesh_interf_del:\n")
     f.flush()
     cpl3.mesh_interf_del()
+    del cpl3
 
     # ------------------------------------------------------------------
     # user target coupling
@@ -610,6 +614,7 @@ def runTest():
     f.write("cpl4.mesh_interf_del:\n")
     f.flush()
     cpl4.mesh_interf_del()
+    del cpl4
 
     # FINALIZE
     pycwp.finalize()

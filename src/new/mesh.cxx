@@ -1496,7 +1496,7 @@ namespace cwipi {
             _faceLNToGN[i] = NULL;
           }
         }
-        else if (_cellFaceMethod == 1) {
+        else if (_cellFaceMethod == 1 || _cellVtxMethod == 1) {
           if (_cellLNToGN[i] != NULL) {
             free(_cellLNToGN[i]);
             _cellLNToGN[i] = NULL;
