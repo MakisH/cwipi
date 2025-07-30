@@ -172,15 +172,15 @@ unit_test:
     - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build$MATRIX_KEY
     - ./cwp_run -ics -timeout 2
-  after_script:
-    - echo $PWD
-    - cd $CI_PROJECT_DIR
-    - sed -i '/testsuite name/c\<testsuite name="'"$MATRIX_KEY"'"' cwp_ctest$MATRIX_KEY.xml
-    - sed -i 's/" classname/_'"$MATRIX_KEY"'" classname/' cwp_ctest$MATRIX_KEY.xml
-  artifacts:
-    when: always
-    reports:
-      junit: cwp_ctest$MATRIX_KEY.xml
+#  after_script:
+#    - echo $PWD
+#    - cd $CI_PROJECT_DIR
+#    - sed -i '/testsuite name/c\<testsuite name="'"$MATRIX_KEY"'"' cwp_ctest$MATRIX_KEY.xml
+#    - sed -i 's/" classname/_'"$MATRIX_KEY"'" classname/' cwp_ctest$MATRIX_KEY.xml
+#  artifacts:
+#    when: always
+#    reports:
+#      junit: cwp_ctest$MATRIX_KEY.xml
 
 job:coverage_report:
   stage: coverage
