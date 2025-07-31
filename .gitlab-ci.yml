@@ -35,6 +35,11 @@ job:init_repo:
 job:build:
   parallel:
     matrix:
+        - COMPILER: "gcc@15"
+          MPI_LIB:
+            - "openmpi"
+          BUILD_TYPE:
+            - "Sanitize"
         - COMPILER: "gcc@14"
           MPI_LIB:
             - "openmpi"
@@ -71,7 +76,9 @@ job:build:
   before_script:
     - module purge
     - echo "compilo = $COMPILER"
-    - if [ "${COMPILER}" == "gcc@14" ]; then
+    - if   [ "${COMPILER}" == "gcc@15" ]; then
+    -   source /tmp_user/juno/sonics/dist/socle_cfd7/source_gcc15_cython3.sh || true
+    - elif [ "${COMPILER}" == "gcc@14" ]; then
     -   source /tmp_user/juno/sonics/dist/socle_cfd7/source_gcc14_cython3.sh || true
     - else
     -   source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=$COMPILER --mpi=$MPI_LIB || true
@@ -80,7 +87,9 @@ job:build:
     - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
     - cd $CUSTOM_CI_DIR
     - mkdir -p build$MATRIX_KEY && cd build$MATRIX_KEY
-    - if   [ "${COMPILER}" == "gcc@14" ]; then
+    - if   [ "${COMPILER}" == "gcc@15" ]; then
+    -   cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON  -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON  -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON  ../
+    - elif [ "${COMPILER}" == "gcc@14" ]; then
     -   cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON  -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON  -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON  ../
     - elif [ "${COMPILER}" == "gcc@12" ]; then
     -   cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON  -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON  -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON  ../
@@ -124,6 +133,11 @@ job:build_coverage:
 unit_test:
   parallel:
     matrix:
+        - COMPILER: "gcc@15"
+          MPI_LIB:
+            - "openmpi"
+          BUILD_TYPE:
+            - "Sanitize"
         - COMPILER: "gcc@14"
           MPI_LIB:
             - "openmpi"
@@ -161,7 +175,9 @@ unit_test:
   before_script:
     - module purge
     - echo "compilo = $COMPILER"
-    - if [ "${COMPILER}" == "gcc@14" ]; then
+    - if   [ "${COMPILER}" == "gcc@15" ]; then
+    -   source /tmp_user/juno/sonics/dist/socle_cfd7/source_gcc15_cython3.sh || true
+    - elif [ "${COMPILER}" == "gcc@14" ]; then
     -   source /tmp_user/juno/sonics/dist/socle_cfd7/source_gcc14_cython3.sh || true
     - else
     -   source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=$COMPILER --mpi=$MPI_LIB || true

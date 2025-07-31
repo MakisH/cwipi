@@ -1731,11 +1731,11 @@ namespace cwipi {
         nRecvData   = cplNbField + 1;
         _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(int),
                                                                    nSendData,
-                                                                   (void *) &(localFieldsNameIdx[0]),
+                                                                   (void *) localFieldsNameIdx.data(),
                                                                    -1,
                                                                    NULL,
                                                                    nRecvData,
-                                                                   (void *) &(cplFieldNameIdx[0]),
+                                                                   (void *) cplFieldNameIdx.data(),
                                                                    -1,
                                                                    NULL);
 
@@ -1762,11 +1762,11 @@ namespace cwipi {
         nRecvData   = cplNbField;
         _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Field_exch_t),
                                                                    nSendData,
-                                                                   (void *) &(localFieldsExch[0]),
+                                                                   (void *) localFieldsExch.data(),
                                                                    -1,
                                                                    NULL,
                                                                    nRecvData,
-                                                                   (void *) &(cplFieldExch[0]),
+                                                                   (void *) cplFieldExch.data(),
                                                                    -1,
                                                                    NULL);
         localFieldsExch.clear();
@@ -1775,11 +1775,11 @@ namespace cwipi {
         nRecvData   = cplNbField;
         _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Dof_location_t),
                                                                    nSendData,
-                                                                   (void *) &(localFieldLocationV[0]),
+                                                                   (void *) localFieldLocationV.data(),
                                                                    -1,
                                                                    NULL,
                                                                    nRecvData,
-                                                                   (void *) &(cplFieldLocationV[0]),
+                                                                   (void *) cplFieldLocationV.data(),
                                                                    -1,
                                                                    NULL);
         localFieldLocationV.clear();
@@ -1880,15 +1880,15 @@ namespace cwipi {
 
         assert(sir_r == sis_s);
 
-        _sis_loc_r.resize(2*sir_s);
+        _sis_loc_r.resize(2*sis_r);
 
         _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Dof_location_t),
                                                                    2*sis_s,
-                                                                   (void *) &(sis_loc[0]),
+                                                                   (void *) sis_loc.data(),
                                                                    -1,
                                                                    NULL,
                                                                    2*sis_r,
-                                                                   (void *) &(_sis_loc_r[0]),
+                                                                   (void *) _sis_loc_r.data(),
                                                                    -1,
                                                                    NULL);
 
@@ -1897,11 +1897,11 @@ namespace cwipi {
 
         _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Dof_location_t),
                                                                    2*sir_s,
-                                                                   (void *) &(sir_loc[0]),
+                                                                   (void *) sir_loc.data(),
                                                                    -1,
                                                                    NULL,
                                                                    2*sir_r,
-                                                                   (void *) &(sir_loc_r[0]),
+                                                                   (void *) sir_loc_r.data(),
                                                                    -1,
                                                                    NULL);
       }
@@ -2095,13 +2095,13 @@ namespace cwipi {
 
           _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(int),
                                                                      nSendData,
-                                                                     (void *) &(localFieldsNameIdx[0]),
+                                                                     (void *) localFieldsNameIdx.data(),
                                                                      cpl_nSendData,
-                                                                     (void *) &(cpl_localFieldsNameIdx[0]),
+                                                                     (void *) cpl_localFieldsNameIdx.data(),
                                                                      nRecvData,
-                                                                     (void *) &(cplFieldsNameIdx[0]),
+                                                                     (void *) cplFieldsNameIdx.data(),
                                                                      cpl_nRecvData,
-                                                                     (void *) &(cpl_cplFieldsNameIdx[0]));
+                                                                     (void *) cpl_cplFieldsNameIdx.data());
 
           cplFieldsName.resize(cplFieldsNameIdx[cplNbField]);
           nSendData   = localFieldsNameIdx[localNbField];
@@ -2136,13 +2136,13 @@ namespace cwipi {
 
           _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Field_exch_t),
                                                                      nSendData,
-                                                                     (void *) &(localFieldsExch[0]),
+                                                                     (void *) localFieldsExch.data(),
                                                                      cpl_nSendData,
-                                                                     (void *) &(cpl_localFieldsExch[0]),
+                                                                     (void *) cpl_localFieldsExch.data(),
                                                                      nRecvData,
-                                                                     (void *) &(cplFieldsExch[0]),
+                                                                     (void *) cplFieldsExch.data(),
                                                                      cpl_nRecvData,
-                                                                     (void *) &(cpl_cplFieldsExch[0]));
+                                                                     (void *) cpl_cplFieldsExch.data());
 
           localFieldsExch.clear();
           cpl_localFieldsExch.clear();
@@ -2155,13 +2155,13 @@ namespace cwipi {
 
           _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Dof_location_t),
                                                                      nSendData,
-                                                                     (void *) &(localFieldLocationV[0]),
+                                                                     (void *) localFieldLocationV.data(),
                                                                      cpl_nSendData,
-                                                                     (void *) &(cpl_localFieldLocationV[0]),
+                                                                     (void *) cpl_localFieldLocationV.data(),
                                                                      nRecvData,
-                                                                     (void *) &(cplFieldsLocationV[0]),
+                                                                     (void *) cplFieldsLocationV.data(),
                                                                      cpl_nRecvData,
-                                                                     (void *) &(cpl_cplFieldsLocationV[0]));
+                                                                     (void *) cpl_cplFieldsLocationV.data());
 
           localFieldLocationV.clear();
           cpl_localFieldLocationV.clear();
@@ -2317,13 +2317,13 @@ namespace cwipi {
 
           _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Dof_location_t),
                                                                      2*sis_s,
-                                                                     (void *) &(sis_loc[0]),
+                                                                     (void *) sis_loc.data(),
                                                                      2*cpl_sis_s,
-                                                                     (void *) &(cpl_sis_loc[0]),
+                                                                     (void *) cpl_sis_loc.data(),
                                                                      2*sis_r,
-                                                                     (void *) &(_sis_loc_r[0]),
+                                                                     (void *) _sis_loc_r.data(),
                                                                      2*cpl_sis_r,
-                                                                     (void *) &(_cpl_sis_loc_r[0]));
+                                                                     (void *) _cpl_sis_loc_r.data());
 
           vector<CWP_Dof_location_t> sir_loc_r;
           sir_loc_r.resize(2*sis_s);
@@ -2333,13 +2333,13 @@ namespace cwipi {
 
           _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(CWP_Dof_location_t),
                                                                      2*sir_s,
-                                                                     (void *) &(sir_loc[0]),
+                                                                     (void *) sir_loc.data(),
                                                                      2*cpl_sir_s,
-                                                                     (void *) &(cpl_sir_loc[0]),
+                                                                     (void *) cpl_sir_loc.data(),
                                                                      2*sir_r,
-                                                                     (void *) &(sir_loc_r[0]),
+                                                                     (void *) sir_loc_r.data(),
                                                                      2*cpl_sir_r,
-                                                                     (void *) &(cpl_sir_loc_r[0]));
+                                                                     (void *) cpl_sir_loc_r.data());
         }
 
         int clear_data = (_n_step > 0);//(_displacement == CWP_DYNAMIC_MESH_VARIABLE && _n_step > 0);
