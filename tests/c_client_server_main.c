@@ -206,7 +206,7 @@ int main ( int argc, char *argv[] )
   }
 
   // Properties_dump
-  CWP_client_Properties_dump();
+  //CWP_client_Properties_dump(); //can lead to deadlock with openmpi
 
   // State_update
   if (id_code == 0) {

@@ -49,10 +49,12 @@ def runTest():
         os.system("rm -f ./python_new_api_client_server_o/code2/cwp_config_srv.txt")
         os.system("mpiexec $Oversubscribe -n 1 cwp_server -cn code0 -p 49100 49100 -c \"python_new_api_client_server_o/code1/cwp_config_srv.txt\" : -n 1 cwp_server -cn code1 -p 49101 49101 -c \"python_new_api_client_server_o/code2/cwp_config_srv.txt\" &")
 
-    while (os.access(config, os.R_OK) != 0):
+    while (not os.access(config, os.R_OK)):
         time.sleep(1)
 
     time.sleep(5)
+
+    comm.Barrier()
 
     if (i_rank == 0):
         print("\nSTART: python_new_api_client_server.py")
@@ -97,7 +99,7 @@ def runTest():
 
     # PROPERTIES DUMP
     print("pycwpclt.properties_dump:\n")
-    pycwpclt.properties_dump()
+    #pycwpclt.properties_dump() #can lead to deadlock with openmpi
 
     # CODES
     print("pycwpclt.code:\n", flush=True)

@@ -53,7 +53,7 @@ Dump_mem()
   then
     listErrFile=$(ls $1.*)
   else
-    listErrFile=$(find $2 -name stderr)
+    listErrFile=$(ls $2.*.err)
   fi
 
   for file in ${listErrFile}
@@ -84,7 +84,7 @@ Dump_time()
   then
     listErrFile=$(ls $1.*)
   else
-    listErrFile=$(find $2 -name stderr)
+    listErrFile=$(ls $2.*.err)
   fi
 
   for file in ${listErrFile}
@@ -213,6 +213,8 @@ Timeout=2
 Ws=""
 PythonUnbuffered=""
 Ics=0
+Incs=0
+Scs=0
 export Oversubscribe="--oversubscribe"
 
 while [ -n "$1" ]
@@ -226,6 +228,8 @@ case "$1" in
     -t) Test="$2"
         shift;;
     -ics) Ics=1;;
+    -incs) Incs=1;;
+    -scs) Scs=1;;
     -args) TestOption="$2"
         shift;;
     -mpiexec) ExeMPI="mpiexec";;
@@ -412,7 +416,7 @@ do
 
     CmdLine="${CmdLine} 2>/dev/null &"
 
-    if [ $(grep -ic client_server <<< $CmdLine) -ge 1 ] && [ ${Ics} -eq 1 ]
+    if ( [ $(grep -ic client_server <<< $CmdLine) -ge 1 ] && [ ${Ics} -eq 1 ] ) || ( [ $(grep -ic client_server <<< $CmdLine) -eq 0 ] && [ ${Incs} -eq 1 ] )
     then
       testIgnored=(${testIgnored[@]} "$i")
       ((iignored=iignored+1))
@@ -432,7 +436,8 @@ do
 
     ((cptRank=IndexRank+Nranks))
 
-    if [ $cptRank -gt $NAvailRank ]
+    # Finish everything before client_server
+    if [ $cptRank -gt $NAvailRank ] || ( [ $(grep -ic client_server <<< $CmdLine) -ge 1 ] && [ ${Scs} -eq 1 ] )
     then
       Wait_job
       Indextest=$iselected
@@ -458,7 +463,7 @@ do
 
       CmdLine="${CmdLine} 2>/dev/null &"
 
-      if [ $(grep -ic client_server <<< $CmdLine) -ge 1 ] && [ ${Ics} -eq 1 ]
+      if ( [ $(grep -ic client_server <<< $CmdLine) -ge 1 ] && [ ${Ics} -eq 1 ] ) || ( [ $(grep -ic client_server <<< $CmdLine) -eq 0 ] && [ ${Incs} -eq 1 ] )
       then
         testIgnored=(${testIgnored[@]} "$i")
         ((iignored=iignored+1))
@@ -488,7 +493,7 @@ do
 
       CmdLine="${CmdLine} 2>/dev/null >/dev/null &"
 
-      if [ $(grep -ic client_server <<< $CmdLine) -ge 1 ] && [ ${Ics} -eq 1 ]
+      if ( [ $(grep -ic client_server <<< $CmdLine) -ge 1 ] && [ ${Ics} -eq 1 ] ) || ( [ $(grep -ic client_server <<< $CmdLine) -eq 0 ] && [ ${Incs} -eq 1 ] )
       then
         testIgnored=(${testIgnored[@]} "$i")
         ((iignored=iignored+1))

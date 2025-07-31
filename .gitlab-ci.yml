@@ -22,7 +22,6 @@ job:init_repo:
   variables:
     GIT_STRATEGY: clone
     GIT_SUBMODULE_STRATEGY: none
-    SCHEDULER_PARAMETERS:  "--qos=co_inter_bigmem  --cpus-per-task=24  --ntasks=1 --time=01:00:00"
   stage: init
   script: # explicitly load modules one by one, so that if one fails, it will be easy to identify
     - echo "Clone directory $PWD"
@@ -35,41 +34,41 @@ job:init_repo:
 job:build:
   parallel:
     matrix:
-        - COMPILER: "gcc@15"
-          MPI_LIB:
-            - "openmpi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "gcc@14"
-          MPI_LIB:
-            - "openmpi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "gcc@12"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "gcc@10"
-          MPI_LIB:
-            - "openmpi"
-          BUILD_TYPE:
-            - "Debug"
-        - COMPILER: "gcc@10"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "intel-llvm@2022"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Debug"
-        - COMPILER: "intel@2022"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Debug"
+      - COMPILER: "gcc@15"
+        MPI_LIB:
+          - "openmpi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "gcc@14"
+        MPI_LIB:
+          - "openmpi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "gcc@12"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "gcc@10"
+        MPI_LIB:
+          - "openmpi"
+        BUILD_TYPE:
+          - "Debug"
+      - COMPILER: "gcc@10"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "intel-llvm@2022"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Debug"
+      - COMPILER: "intel@2022"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Debug"
   variables:
     MATRIX_KEY: _${COMPILER}_${MPI_LIB}_BUILD_${BUILD_TYPE}
   stage: build
@@ -110,7 +109,7 @@ job:build_coverage:
   script:
     - cd $CUSTOM_CI_DIR
     - mkdir -p build_coverage && cd build_coverage
-    - cmake -DCMAKE_BUILD_TYPE="Coverage" -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PARMETIS=OFF -DCWP_ENABLE_PTSCOTCH=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_PDM_TESTS=OFF -DCWP_ENABLE_CLIENT_SERVER=ON ../
+    - cmake -DCMAKE_BUILD_TYPE="Coverage" -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON ../
     - make -j
 
 #job:doc:
@@ -130,47 +129,46 @@ job:build_coverage:
 #     - ./build/doc/*
 #   expire_in: 24 hours
 
-unit_test:
+unit_test:cwipi:
   parallel:
     matrix:
-        - COMPILER: "gcc@15"
-          MPI_LIB:
-            - "openmpi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "gcc@14"
-          MPI_LIB:
-            - "openmpi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "gcc@12"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "gcc@10"
-          MPI_LIB:
-            - "openmpi"
-          BUILD_TYPE:
-            - "Debug"
-        - COMPILER: "gcc@10"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Sanitize"
-        - COMPILER: "intel-llvm@2022"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Debug"
-        - COMPILER: "intel@2022"
-          MPI_LIB:
-            - "intel-oneapi"
-          BUILD_TYPE:
-            - "Debug"
+      - COMPILER: "gcc@15"
+        MPI_LIB:
+          - "openmpi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "gcc@14"
+        MPI_LIB:
+          - "openmpi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "gcc@12"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "gcc@10"
+        MPI_LIB:
+          - "openmpi"
+        BUILD_TYPE:
+          - "Debug"
+      - COMPILER: "gcc@10"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Sanitize"
+      - COMPILER: "intel-llvm@2022"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Debug"
+      - COMPILER: "intel@2022"
+        MPI_LIB:
+          - "intel-oneapi"
+        BUILD_TYPE:
+          - "Debug"
   variables:
     MATRIX_KEY: _${COMPILER}_${MPI_LIB}_BUILD_${BUILD_TYPE}
-    SCHEDULER_PARAMETERS: "--qos=co_inter_bigmem --ntasks=40 --time=01:00:00 --exclusive"
   stage: test
   before_script:
     - module purge
@@ -187,16 +185,20 @@ unit_test:
     - export SLURM_EXACT=1
     - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build$MATRIX_KEY
-    - ./cwp_run -ics -timeout 2
-#  after_script:
-#    - echo $PWD
-#    - cd $CI_PROJECT_DIR
-#    - sed -i '/testsuite name/c\<testsuite name="'"$MATRIX_KEY"'"' cwp_ctest$MATRIX_KEY.xml
-#    - sed -i 's/" classname/_'"$MATRIX_KEY"'" classname/' cwp_ctest$MATRIX_KEY.xml
-#  artifacts:
-#    when: always
-#    reports:
-#      junit: cwp_ctest$MATRIX_KEY.xml
+    - ./cwp_run -ics -timeout 5
+
+unit_test:clt-intel-oneapi:
+  needs: [job:init_repo, job:build, unit_test:cwipi]
+  stage: test
+  before_script:
+    - module purge
+    - source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=gcc@12 --mpi=intel-oneapi || true
+  script:
+    - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
+    - export SLURM_EXACT=1
+    - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
+    - cd $CUSTOM_CI_DIR/build_gcc@12_intel-oneapi_BUILD_Sanitize
+    - ./cwp_run -incs -scs -timeout 5
 
 job:coverage_report:
   stage: coverage
@@ -207,7 +209,7 @@ job:coverage_report:
     - export SLURM_EXACT=1
     - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build_coverage
-    - ./cwp_run -ics -timeout 2
+    - ./cwp_run -scs -timeout 5
     - cd $CUSTOM_CI_DIR/build_coverage/src/CMakeFiles/cwp.dir/new
     - gcov -b -l -p -c *.gcno
     - cd $CUSTOM_CI_DIR/build_coverage
@@ -225,8 +227,6 @@ pages:
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_TAG != null
-  before_script:
-    - ''
   script:
     - mkdir -p public
     - echo "CI_COMMIT_TAG = ${CI_COMMIT_TAG}"

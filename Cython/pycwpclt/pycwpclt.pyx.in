@@ -19,7 +19,7 @@
 #-----------------------------------------------------------------------------
 
 """
-cwipi - Coupling With Interpolation Parallel Interface library.
+pycwpclt - Coupling With Interpolation Parallel Interface library.
 """
 
 #-----------------------------------------------------------------------------
@@ -1341,7 +1341,7 @@ cdef class PartData (object):
                           <int   *> self.n_elt,
                                     self.n_part)
 
-    def __del__(self):
+    def __dealloc__(self): # __del__ not called with cython < 3
         """
         Delete a :py:class:`PartData` object.
         """
