@@ -10,13 +10,6 @@ file(GLOB SOURCES
      *.[ch]
      *.[ch]xx)
 
-set(SOURCESPDM "")
-if (NOT CWP_ENABLE_EXTERNAL_PDM)
-  file(GLOB_RECURSE SOURCESPDM
-      ${PDM_SOURCE_DIR}/src/*.[ch])
-  list(FILTER SOURCESPDM EXCLUDE REGEX "pdm_no_mpi*")
-endif()
-
 if (CWP_ENABLE_CLIENT_SERVER)
   list(APPEND SOURCES new/client_server/client.cxx)
   list(APPEND SOURCES new/client_server/client.h)
@@ -49,7 +42,38 @@ if (CWP_ENABLE_Fortran)
   list(APPEND SOURCES fortran/callfortlocinterpfct.f90)
 endif()
 
-add_library(cwp OBJECT ${SOURCES} ${SOURCESPDM})
+if (NOT CWP_ENABLE_EXTERNAL_PDM)
+  file(GLOB_RECURSE SOURCESPDM
+      ${PDM_SOURCE_DIR}/src/*.[ch])
+  list(FILTER SOURCESPDM EXCLUDE REGEX "pdm_no_mpi*")
+  add_library(pdm OBJECT ${SOURCESPDM})
+  list(APPEND PDM_INC ${PDM_SOURCE_DIR}/src
+                      ${PDM_SOURCE_DIR}/src/adapt
+                      ${PDM_SOURCE_DIR}/src/algorithm
+                      ${PDM_SOURCE_DIR}/src/exchange_protocol
+                      ${PDM_SOURCE_DIR}/src/ext_wrapper
+                      ${PDM_SOURCE_DIR}/src/geometry
+                      ${PDM_SOURCE_DIR}/src/gnum_utils
+                      ${PDM_SOURCE_DIR}/src/gpu
+                      ${PDM_SOURCE_DIR}/src/io
+                      ${PDM_SOURCE_DIR}/src/mesh
+                      ${PDM_SOURCE_DIR}/src/mesh_struct
+                      ${PDM_SOURCE_DIR}/src/mesh_topology
+                      ${PDM_SOURCE_DIR}/src/meshgen
+                      ${PDM_SOURCE_DIR}/src/mpi_wrapper
+                      ${PDM_SOURCE_DIR}/src/ppart
+                      ${PDM_SOURCE_DIR}/src/struct
+                      ${PDM_SOURCE_DIR}/src/test_utils
+                      ${PDM_SOURCE_DIR}/src/util)
+  target_include_directories(pdm
+                             PRIVATE   $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
+                             PUBLIC    $<INSTALL_INTERFACE:include/>
+                             PRIVATE  "$<BUILD_INTERFACE:${PDM_INC}>")
+else()
+  set(PDM_INC "")
+endif()
+
+add_library(cwp OBJECT ${SOURCES})
 
 target_include_directories(cwp
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
@@ -61,28 +85,11 @@ target_include_directories(cwp
                            PUBLIC    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fvm>
                            PUBLIC    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bft>
                            PUBLIC    $<INSTALL_INTERFACE:include/>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/adapt>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/algorithm>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/exchange_protocol>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ext_wrapper>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/geometry>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gnum_utils>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gpu>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/io>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_struct>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_topology>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/meshgen>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mpi_wrapper>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ppart>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/struct>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/test_utils>
-                           PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/util>)
+                           PRIVATE  "$<BUILD_INTERFACE:${PDM_INC}>")
 
 if (CWP_ENABLE_Fortran)
 
-  add_library(cwpf OBJECT ${SOURCESF} ${SOURCESPDM})
+  add_library(cwpf OBJECT ${SOURCESF})
 
   target_include_directories(cwpf
                              INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
@@ -94,24 +101,7 @@ if (CWP_ENABLE_Fortran)
                              PUBLIC    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fvm>
                              PUBLIC    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bft>
                              PUBLIC    $<INSTALL_INTERFACE:include/>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/adapt>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/algorithm>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/exchange_protocol>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ext_wrapper>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/geometry>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gnum_utils>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/gpu>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/io>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_struct>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mesh_topology>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/meshgen>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/mpi_wrapper>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/ppart>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/struct>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/test_utils>
-                             PRIVATE   $<BUILD_INTERFACE:${PDM_SOURCE_DIR}/src/util>)
+                             PRIVATE  "$<BUILD_INTERFACE:${PDM_INC}>")
 
   add_dependencies(cwpf cwp)
 
@@ -176,8 +166,8 @@ if (CWP_ENABLE_SHARED)
     target_link_libraries (cwp        pdm::pdm_shared)
     target_link_libraries (cwp_shared pdm::pdm_shared)
   else ()
-    add_library(cwp_shared SHARED $<TARGET_OBJECTS:cwp>)
-#    add_dependencies(cwp_shared pdm)
+    add_library(cwp_shared SHARED $<TARGET_OBJECTS:cwp> $<TARGET_OBJECTS:pdm>)
+    add_dependencies(cwp_shared pdm)
     if (CWP_ENABLE_HIDE_PDM_SYMBOLS)
       if (APPLE)
         set(EXPORTED_SYMBOLS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../cwp_apple.map)
@@ -195,7 +185,7 @@ if (CWP_ENABLE_SHARED)
   set_target_properties(cwp_shared PROPERTIES
                         PUBLIC_HEADER "${LIST_HEADER}")
   get_target_property(CWP_INC cwp INCLUDE_DIRECTORIES)
-  target_include_directories(cwp_shared PUBLIC ${CWP_INC})
+  target_include_directories(cwp_shared PUBLIC "${CWP_INC}")
 
   if (CWP_ENABLE_Fortran)
     set_property(TARGET ${cwpf} PROPERTY POSITION_INDEPENDENT_CODE 1)
@@ -204,7 +194,8 @@ if (CWP_ENABLE_SHARED)
       target_link_libraries (cwpf        pdm::pdmf_shared)
       target_link_libraries (cwpf_shared pdm::pdmf_shared)
     else ()
-      add_library(cwpf_shared SHARED $<TARGET_OBJECTS:cwpf> )
+      add_library(cwpf_shared SHARED $<TARGET_OBJECTS:cwpf> $<TARGET_OBJECTS:pdm>)
+      add_dependencies(cwpf_shared pdm)
       if (CWP_ENABLE_HIDE_PDM_SYMBOLS)
         if (APPLE)
           set(EXPORTED_SYMBOLS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../cwp_apple.map)
@@ -222,7 +213,7 @@ if (CWP_ENABLE_SHARED)
     set_target_properties(cwpf_shared PROPERTIES
                           PUBLIC_HEADER "${LIST_HEADERF}")
     get_target_property(CWP_INC cwpf INCLUDE_DIRECTORIES)
-    target_include_directories(cwpf_shared PUBLIC ${CWP_INC})
+    target_include_directories(cwpf_shared PUBLIC "${CWP_INC}")
   endif()
 
 endif()
@@ -244,7 +235,7 @@ if (CWP_ENABLE_STATIC)
   set_target_properties(cwp_static PROPERTIES
                         PUBLIC_HEADER "${LIST_HEADER}")
   get_target_property(CWP_INC cwp INCLUDE_DIRECTORIES)
-  target_include_directories(cwp_static PUBLIC ${CWP_INC})
+  target_include_directories(cwp_static PUBLIC "${CWP_INC}")
 
   if (CWP_ENABLE_Fortran)
     set_property(TARGET ${cwpf} PROPERTY POSITION_INDEPENDENT_CODE 1)
@@ -253,8 +244,8 @@ if (CWP_ENABLE_STATIC)
       target_link_libraries (cwpf        pdm::pdmf_static)
       target_link_libraries (cwpf_static pdm::pdmf_static)
     else ()
-      add_library(cwpf_static STATIC $<TARGET_OBJECTS:cwpf> $<TARGET_OBJECTS:pdmf>)
-      add_dependencies(cwpf_static pdmf)
+      add_library(cwpf_static STATIC $<TARGET_OBJECTS:cwpf> $<TARGET_OBJECTS:pdm>)
+      add_dependencies(cwpf_static pdm)
     endif ()
     add_dependencies(cwpf_static cwpf cwp_static)
     set_target_properties(cwpf_static PROPERTIES OUTPUT_NAME "cwpf")
@@ -263,7 +254,7 @@ if (CWP_ENABLE_STATIC)
     set_target_properties(cwpf_static PROPERTIES
                           PUBLIC_HEADER "${LIST_HEADERF}")
     get_target_property(CWP_INC cwpf INCLUDE_DIRECTORIES)
-    target_include_directories(cwpf_static PUBLIC ${CWP_INC})
+    target_include_directories(cwpf_static PUBLIC "${CWP_INC}")
   endif()
 
 endif()

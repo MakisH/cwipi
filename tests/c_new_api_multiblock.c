@@ -34,7 +34,6 @@
 #include "pdm_part.h"
 #include "pdm_mpi_node_first_rank.h"
 #include "pdm_error.h"
-#include "pdm_timer.h"
 #include "pdm_part_to_block.h"
 #include "pdm_block_to_part.h"
 
