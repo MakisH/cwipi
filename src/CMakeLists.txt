@@ -265,6 +265,11 @@ endif()
 
 set (_targets "")
 
+list (APPEND _targets cwp)
+if (CWP_ENABLE_Fortran)
+  list (APPEND _targets cwpf)
+endif()
+
 if (CWP_ENABLE_SHARED)
   list (APPEND _targets cwp_shared)
   if (CWP_ENABLE_Fortran)
