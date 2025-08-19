@@ -3,8 +3,9 @@ stages:
   - init
   - build
   - test
-  - deploy
   - coverage
+  - test_install
+  - deploy
 
 # Default variables and parameters
 variables:
@@ -222,6 +223,23 @@ job:coverage_report:
         coverage_report:
           coverage_format: cobertura
           path: coverage.xml
+
+fake_install:
+  stage: test_install
+  before_script:
+    - module purge
+    - source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=gcc@12 --mpi=intel-oneapi || true
+  script:
+    - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
+    - cd $CUSTOM_CI_DIR
+    - mkdir -p build_fake_install && cd build_fake_install
+    - export CWIPI_INSTALL_ROOT=${PWD}/fake_install
+    - cmake -DCMAKE_INSTALL_PREFIX=${CWIPI_INSTALL_ROOT} -DCMAKE_BUILD_TYPE=Release -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON -DCWP_ENABLE_STATIC=ON -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON ../
+    - make -j install
+    - cd $CUSTOM_CI_DIR
+    - mkdir -p test_fake_install && cd test_fake_install
+    - export CWIPI_ROOT=${CWIPI_INSTALL_ROOT}
+    - cmake ../cmake/check_install/
 
 pages:
   stage: deploy
