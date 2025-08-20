@@ -364,8 +364,8 @@ namespace cwipi {
                                              &(_cell_vtx[i_part]));
 
           PDM_mesh_location_points_in_elt_get (_id_pdm,
-                                               i_part,
                                                0,
+                                               i_part,
                                                &(_elt_pts_inside_idx[i_part]),
                                                &(_points_gnum[i_part]),
                                                &(_points_coords[i_part]),
@@ -496,8 +496,8 @@ namespace cwipi {
                                                &(_cell_vtx[i_part]));
 
             PDM_mesh_location_points_in_elt_get (_id_pdm,
-                                                 i_part,
                                                  0,
+                                                 i_part,
                                                  &(_elt_pts_inside_idx[i_part]),
                                                  &(_points_gnum[i_part]),
                                                  &(_points_coords[i_part]),
@@ -611,8 +611,8 @@ namespace cwipi {
                                                &(cpl_spatial_interp->_cell_vtx[i_part]));
 
             PDM_mesh_location_points_in_elt_get (_id_pdm,
-                                                 i_part,
                                                  0,
+                                                 i_part,
                                                  &(cpl_spatial_interp->_elt_pts_inside_idx[i_part]),
                                                  &(cpl_spatial_interp->_points_gnum[i_part]),
                                                  &(cpl_spatial_interp->_points_coords[i_part]),
