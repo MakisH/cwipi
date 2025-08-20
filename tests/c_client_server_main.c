@@ -137,7 +137,7 @@ int main ( int argc, char *argv[] )
     system("mkdir -p client_main_o/code2");
     system("rm -f ./client_main_o/code1/cwp_config_srv.txt");
     system("rm -f ./client_main_o/code2/cwp_config_srv.txt");
-    system("mpirun -n 1 cwp_server -cn code0 -p 60100 60100 -c \"client_main_o/code1/cwp_config_srv.txt\" : -n 1  cwp_server -cn code1 -p 60101 60101 -c \"client_main_o/code2/cwp_config_srv.txt\" &");
+    system("mpirun $Oversubscribe -n 1 cwp_server -cn code0 -p 60100 60100 -c \"client_main_o/code1/cwp_config_srv.txt\" : -n 1 cwp_server -cn code1 -p 60101 60101 -c \"client_main_o/code2/cwp_config_srv.txt\" &");
   }
 
   while (access(config, R_OK) != 0) {
@@ -206,7 +206,7 @@ int main ( int argc, char *argv[] )
   }
 
   // Properties_dump
-  CWP_client_Properties_dump();
+  //CWP_client_Properties_dump(); //can lead to deadlock with openmpi
 
   // State_update
   if (id_code == 0) {

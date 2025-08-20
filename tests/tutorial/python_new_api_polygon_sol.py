@@ -238,15 +238,13 @@ def runTest():
     pycwp.time_step_end(code_name[0])
 
     # Delete field :
-    # del of the class Field is automatically called once there
-    # are no more references to the field instance in cpl
+    del field
 
     # Delete Mesh :
     cpl.mesh_interf_del()
 
     # Delete the coupling :
-    # del of the class Coupling is automatically called once there
-    # are no more references to cpl
+    del cpl
 
     # Finalize CWIPI :
     pycwp.finalize()

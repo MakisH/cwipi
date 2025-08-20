@@ -2388,13 +2388,11 @@ void LocationToLocalMesh::compute3DMeanValuesPoly(const double point_coords[],
 
       for (int j = 0; j < n_face_vertex; j++) {
         int vertex = faceToVertex[faceToVertexIdx[face_location_idx]+j] - 1;
-
         distBarCoords[vertex] = distBarCoordsFace[j];
-
-        distBarCoordsFaceIdx.clear();
-        distBarCoordsFace.clear();
-
       }
+
+      distBarCoordsFaceIdx.clear();
+      distBarCoordsFace.clear();
 
     }
 

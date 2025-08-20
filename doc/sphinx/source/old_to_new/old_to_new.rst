@@ -20,6 +20,9 @@ In summary, since version 1.0 the following additional arguments are required at
    - ``n_code``: the number of codes executed on current MPI rank ;
    - ``code_names``: the list of local code names ;
    - ``is_active_rank``: this variable indicates whether the current MPI rank will participate in the coupling.
+``is_active_rank`` is set to 0 to exclude the current MPI rank from the coupling (e.g. depending on the users's code
+placement stragegy on CPUs). If set to 1, a coupling including interface mesh and fields/parts has to be created for
+the current MPI rank.
 
 Create a coupling
 =================

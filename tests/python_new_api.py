@@ -89,12 +89,12 @@ def runTest():
         from pycwp import pycwp
     except:
         if i_rank == 0:
-            print("      Error : CWIPI module not found (update PYTHONPATH variable)")
-        sys.exit(1)
+            print("      Error : CWIPI module (pycwp) not found (update PYTHONPATH variable)")
+        raise # re-raise the same error
+
 
     # OUTPUT
-    srank = '{0}'.format(i_rank)
-    f=open("python_new_api_"+srank.zfill(4)+".txt",'w')
+    f = open(f"python_api_{i_rank:04d}.txt", 'w')
     pycwp.output_file_set(f)
 
     # INIT
@@ -394,6 +394,7 @@ def runTest():
         f.write("cpl.mesh_interf_del:\n")
         f.flush()
         cpl.mesh_interf_del()
+        del cpl
 
     else:
 
@@ -434,6 +435,7 @@ def runTest():
         f.write("cpl.mesh_interf_del:\n")
         f.flush()
         cpl.mesh_interf_del()
+        del cpl
 
     # ------------------------------------------------------------------
     # Volumic Cpl
@@ -494,6 +496,7 @@ def runTest():
     f.write("cpl2.mesh_interf_del:\n")
     f.flush()
     cpl2.mesh_interf_del()
+    del cpl2
 
     # ------------------------------------------------------------------
     # High-order
@@ -550,6 +553,7 @@ def runTest():
     f.write("cpl3.mesh_interf_del:\n")
     f.flush()
     cpl3.mesh_interf_del()
+    del cpl3
 
     # ------------------------------------------------------------------
     # user target coupling
@@ -597,7 +601,6 @@ def runTest():
     # user targets
     user_tgt_coords = np.array([1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4], dtype=np.double)
     cpl4.user_tgt_pts_set(0,
-                          4,
                           user_tgt_coords,
                           None)
 
@@ -610,6 +613,7 @@ def runTest():
     f.write("cpl4.mesh_interf_del:\n")
     f.flush()
     cpl4.mesh_interf_del()
+    del cpl4
 
     # FINALIZE
     pycwp.finalize()
