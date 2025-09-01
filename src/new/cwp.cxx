@@ -535,29 +535,29 @@ CWP_Finalize
  void
 )
 {
-  int flag = 0;
-
-  MPI_Initialized(&flag);
+  // Two choices: couplingDB is kept alive and the signleton remains as a potential leak
+  // or couplingDB is freed and all structures are to be freed explicitely by the user
+  // (Cpl, Interf, Field,...)
+  //cwipi::CouplingDB & couplingDB =
+  //  cwipi::CouplingDB::getInstance();
+  //
+  //couplingDB.kill();
 
   cwipi::CodePropertiesDB & properties =
     cwipi::CodePropertiesDB::getInstance();
 
-  const MPI_Comm globalComm = properties.globalCommGet();
+  int flag = 0;
 
- // PDM_printf("CWP_Finalize\n");
+  MPI_Initialized(&flag);
+
   fflush(stdout);
   if (flag != 0) {
     PDM_printf_flush();
+    const MPI_Comm globalComm = properties.globalCommGet();
     MPI_Barrier(globalComm);
-//    MPI_Comm oldFVMComm = fvmc_parall_get_mpi_comm();
   }
 
   properties.kill();
-
-  cwipi::CouplingDB & couplingDB =
-    cwipi::CouplingDB::getInstance();
-
-  couplingDB.kill();
 
   cwipi::Factory<cwipi::Communication, CWP_Comm_t> &factoryComm =
     cwipi::Factory<cwipi::Communication, CWP_Comm_t>::getInstance();
