@@ -461,6 +461,10 @@ namespace cwipi {
 
     /* Get PDM part_to_part object */
     if (_id_pdm != NULL) {
+      if (_ptsp != NULL) {
+        PDM_part_to_part_free(_ptsp);
+        _ptsp = NULL;
+      }
       PDM_mesh_intersection_part_to_part_get(_id_pdm,
                                              &_ptsp,
                                              PDM_OWNERSHIP_USER);

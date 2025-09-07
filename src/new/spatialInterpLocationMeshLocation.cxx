@@ -655,6 +655,10 @@ namespace cwipi {
     }
 
     if (_id_pdm != NULL) {
+      if (_ptsp != NULL) {
+        PDM_part_to_part_free(_ptsp);
+        _ptsp = NULL;
+      }
       PDM_mesh_location_part_to_part_get(_id_pdm,
                                          0,
                                          &_ptsp,
