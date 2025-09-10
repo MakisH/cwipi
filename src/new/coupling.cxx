@@ -1285,7 +1285,7 @@ namespace cwipi {
       if (cpl._n_step == 0) {
 
         // Geometry
-        cpl._id_geom_writer =PDM_writer_geom_create_from_mesh_nodal (cpl._writer,
+        cpl._id_geom_writer = PDM_writer_geom_create_from_mesh_nodal(cpl._writer,
                                                                      "geom",
                                                                      cpl._mesh.getPdmNodalIndex());
 
@@ -1339,7 +1339,7 @@ namespace cwipi {
 
         PDM_writer_var_dim_t PDMfieldComp = PDM_WRITER_VAR_SCALAR;
 
-        PDM_writer_status_t  st_dep_tps = PDM_WRITER_ON;
+        PDM_writer_status_t  st_dep_tps   = PDM_WRITER_ON;
 
         if (cpl._displacement == CWP_DYNAMIC_MESH_STATIC) {
           st_dep_tps = PDM_WRITER_OFF;
@@ -1391,10 +1391,7 @@ namespace cwipi {
         PDM_writer_geom_write(cpl._writer, cpl._id_geom_writer);
 
         if (cpl._userTargetN != nullptr) {
-
-          PDM_writer_geom_write(cpl._writer,
-                              cpl._id_user_tgt_geom_writer);
-
+          PDM_writer_geom_write(cpl._writer, cpl._id_user_tgt_geom_writer);
         } // end if there is a user target
 
         // Variables to show user targets partitionning
@@ -1621,19 +1618,18 @@ namespace cwipi {
 
     /////////////////////////////////////////////////////////////////////////////
     //                                                                         //
-    // Export mesh and associted fields                                        //
+    // Export mesh and associated fields                                       //
     //                                                                         //
     /////////////////////////////////////////////////////////////////////////////
 
 
 
     if (!_coupledCodeProperties.localCodeIs()) {
-
+      // I only run local code
       exportMesh(*this);
-
     }
-
     else {
+      // I also run coupled code
       int codeID    = localCodePropertiesGet()->idGet();
       int cplCodeID = coupledCodePropertiesGet()->idGet();
 
@@ -1642,10 +1638,8 @@ namespace cwipi {
         cwipi::Coupling& cpl_cpl = _cplDB.couplingGet (_coupledCodeProperties, _cplId);
 
         if (codeID < cplCodeID) {
-
-          exportMesh(*this);
-          exportMesh(cpl_cpl);
-
+          exportMesh(*this);   // Export local   code's mesh
+          exportMesh(cpl_cpl); // Export coupled code's mesh
         }
       }
     }
@@ -1659,13 +1653,13 @@ namespace cwipi {
     // - Store Data to send
 
     if (!_coupledCodeProperties.localCodeIs()) {
-
+      // I only run local code
       int codeID    = localCodePropertiesGet()->idGet();
       int cplCodeID = coupledCodePropertiesGet()->idGet();
 
 
       if (_n_step == 0) {
-
+        // First step
         std::string localFieldsName="";
         vector<int> localFieldsNameIdx;
 
@@ -1704,8 +1698,8 @@ namespace cwipi {
                                                                    NULL);
         // - Exchange number of fields
 
-        int nSendData   = 1;
-        int nRecvData   = 1;
+        int nSendData  = 1;
+        int nRecvData  = 1;
         int cplNbField = 0;
 
         _communication.iexchGlobalDataBetweenCodesThroughUnionCom (sizeof(int),
@@ -1720,9 +1714,9 @@ namespace cwipi {
 
         // - Allocate memory to receive data
 
-        vector<int               > cplFieldNameIdx (cplNbField + 1, 0);
-        vector<CWP_Field_exch_t  > cplFieldExch (cplNbField);
-        vector<CWP_Dof_location_t> cplFieldLocationV (cplNbField);
+        vector<int               > cplFieldNameIdx  (cplNbField + 1, 0);
+        vector<CWP_Field_exch_t  > cplFieldExch     (cplNbField);
+        vector<CWP_Dof_location_t> cplFieldLocationV(cplNbField);
         string                     cplFieldName;
 
         // - Transfer memory to receive data
@@ -2593,10 +2587,8 @@ namespace cwipi {
   void
   Coupling::visuEnd ()
   {
-    if (_writer != NULL) {
-      PDM_writer_free (_writer);
-      _writer = nullptr;
-    }
+    PDM_writer_free(_writer);
+    _writer = nullptr;
   }
 
 

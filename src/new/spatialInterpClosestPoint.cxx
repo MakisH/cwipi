@@ -929,9 +929,9 @@ namespace cwipi {
         }
 
 
-        double *A = (double *) malloc(sizeof(double) * siz * siz);
-        double *rhs = (double *) malloc(sizeof(double) * siz *stride);
-        double *b = (double *) malloc(sizeof(double) * siz );
+        double *A   = (double *) malloc(sizeof(double) * siz * siz   );
+        double *rhs = (double *) malloc(sizeof(double) * siz * stride);
+        double *b   = (double *) malloc(sizeof(double) * siz         );
 
         for (int i = 0; i < siz * siz; i++) {
           A[i] = 0;
