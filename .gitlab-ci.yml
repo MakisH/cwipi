@@ -113,23 +113,6 @@ job:build_coverage:
     - cmake -DCMAKE_BUILD_TYPE="Coverage" -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON ../
     - make -j
 
-#job:doc:
-# stage: build
-# needs: ["job:init_repo", "job:build"] #job:init is needed to get dotenv artifacts
-# before_script:
-#   - module purge
-#   - source /scratchm/sonics/dist/source.sh --env sonics_dev --compiler "intel@2022" --mpi "intel-oneapi" && module load py-gcovr-4.2-gcc-8.3.1-6lqfk6f py-breathe-4.21.0-gcc-8.3.1-t576gc7 doxygen-1.9.3-gcc-8.3.1-4qcntlg texlive/2021
-# rules:
-#   - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "dev"
-# script:
-#   - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
-#   - cd $CUSTOM_CI_DIR/build_intel@2022_intel-oneapi_BUILD_Debug
-#   - make doc
-# artifacts:
-#   paths:
-#     - ./build/doc/*
-#   expire_in: 24 hours
-
 unit_test:cwipi:
   parallel:
     matrix:

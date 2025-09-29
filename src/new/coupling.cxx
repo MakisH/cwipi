@@ -2587,7 +2587,9 @@ namespace cwipi {
   void
   Coupling::visuEnd ()
   {
-    PDM_writer_free(_writer);
+    if (_writer != NULL) {
+      PDM_writer_free(_writer);
+    }
     _writer = nullptr;
   }
 

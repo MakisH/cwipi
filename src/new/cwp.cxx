@@ -605,9 +605,6 @@ CWP_Finalize
   // Free PDM
   PDM_Finalize();
 
-  // Purge PDM_MPI (without calling MPI_Finalize and freeing comm)
-  PDM_mpi_purge(PDM_OWNERSHIP_USER);
-
 }
 
 /*----------------------------------------------------------------------------*
