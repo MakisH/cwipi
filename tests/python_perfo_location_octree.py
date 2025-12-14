@@ -65,8 +65,6 @@ def setup_mesh(comm, n_vtx_seg, elt_type, xyz_min, length, order, random_factor,
 
   mpart.compute()
 
-  comm.Barrier()
-  if comm.rank == 0: print("multipart OK", flush=True)
 
   # Deform
   vtx_coord    = mpart.vtx_coord_get(0, 0)
@@ -520,6 +518,9 @@ def run_coupling():
   if args.old:
     cwipi.finalize()
   else:
+    del field
+    cpl[0].mesh_interf_del()
+    del cpl[0]
     pycwp.finalize()
 
   comm.Barrier()
@@ -527,6 +528,7 @@ def run_coupling():
   if i_rank == 0:
     print("The End :D\n")
 
+  # Finalize MPI
   MPI.Finalize()
 
 
