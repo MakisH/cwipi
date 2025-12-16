@@ -3192,7 +3192,7 @@ CWP_Param_del
     properties.ctrlParamCancel<double>(codeNameStr, nameStr);
     break;
   case CWP_CHAR :
-    properties.ctrlParamCancel<string>(codeNameStr, nameStr);
+    properties.ctrlParamCancel<char *>(codeNameStr, nameStr);
     break;
   default :
     PDM_error(__FILE__, __LINE__, 0,
@@ -3236,7 +3236,7 @@ CWP_Param_n_get
     nParam = properties.ctrlParamNGet<double>(codeNameStr);
     break;
   case CWP_CHAR :
-    nParam = properties.ctrlParamNGet<string>(codeNameStr);
+    nParam = properties.ctrlParamNGet<char *>(codeNameStr);
     break;
   default :
     PDM_error(__FILE__, __LINE__, 0,
@@ -3281,7 +3281,7 @@ CWP_Param_list_get
     properties.ctrlParamListGet<double>(codeNameStr, nParam, paramNames);
     break;
   case CWP_CHAR :
-    properties.ctrlParamListGet<string>(codeNameStr, nParam, paramNames);
+    properties.ctrlParamListGet<char *>(codeNameStr, nParam, paramNames);
     break;
   default :
     PDM_error(__FILE__, __LINE__, 0,
@@ -3324,7 +3324,7 @@ CWP_Param_is
     isParam = properties.ctrlParamIs<double>(codeNameStr, nameStr);
     break;
   case CWP_CHAR :
-    isParam = properties.ctrlParamIs<string>(codeNameStr, nameStr);
+    isParam = properties.ctrlParamIs<char *>(codeNameStr, nameStr);
     break;
   default :
     PDM_error(__FILE__, __LINE__, 0,

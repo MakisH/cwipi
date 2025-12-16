@@ -138,7 +138,11 @@ main(int argc, char *argv[]) {
     int toto = 111;
     CWP_Param_lock("code1");
     CWP_Param_add("code1", "toto", CWP_INT, &toto);
+    CWP_Param_del("code1", "toto", CWP_INT);
+    CWP_Param_add("code1", "toto", CWP_INT, &toto);
     const char *A = "Bonjour code 1 !";
+    CWP_Param_add("code1", "toto2", CWP_CHAR, &A);
+    CWP_Param_del("code1", "toto2", CWP_CHAR);
     CWP_Param_add("code1", "toto2", CWP_CHAR, &A);
     CWP_Param_unlock("code1");
   }
