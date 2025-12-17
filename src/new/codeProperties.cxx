@@ -62,6 +62,7 @@ namespace cwipi
      _globalComm(globalComm),
      _isActiveRank(false),
      _userStruct(NULL),
+     _winGlob(MPI_WIN_NULL),
      _winIntParamIdxName(MPI_WIN_NULL),
      _winIntParamName(MPI_WIN_NULL),
      _winIntParamValue(MPI_WIN_NULL),
