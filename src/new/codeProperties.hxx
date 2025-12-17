@@ -549,7 +549,7 @@ namespace cwipi {
      *
      */
 
-    inline void * 
+    inline void *
     userStructureGet();
 
 
@@ -703,7 +703,7 @@ namespace cwipi {
    *
    */
 
-  void * 
+  void *
   CodeProperties::userStructureGet
   (
   )
@@ -1012,7 +1012,7 @@ namespace cwipi {
   (
    const string &name,
    int          *value
-  ) 
+  )
   {
     // cout << "ctrlParamGet int " << _name  << " " << name << endl;
 
@@ -1126,7 +1126,7 @@ namespace cwipi {
   (
    const string &name,
    double       *value
-  ) 
+  )
   {
     // cout << "ctrlParamGet double " << _name  << " " << name << endl;
 
@@ -1813,7 +1813,7 @@ namespace cwipi {
       int  *winTypeParamIdxNameData = NULL;
       char *winTypeParamNameData = NULL;
 
-      if (typeid(T) == typeid(string)) {
+      if (typeid(T) == typeid(char *)) {
         nTypeParam               = nStrParam;
         winTypeParamIdxValue     = &_winStrParamIdxValue;
         winTypeParamValue        = &_winStrParamValue;
@@ -1848,7 +1848,7 @@ namespace cwipi {
       }
 
       int i;
-      int found;
+      int found = 0;
 
       for (i = 0; i < nTypeParam; i++) {
         size_t sParam = winTypeParamIdxNameData[i+1] - winTypeParamIdxNameData[i];
@@ -1898,7 +1898,15 @@ namespace cwipi {
 
         nTypeParam += -1;
 
-        winTypeParamIdxNameData[nStrParam+1] = winTypeParamIdxNameData[nStrParam] + name.size();
+        if (typeid(T) == typeid(char *)) {
+          _winGlobData[3] = nTypeParam;
+        }
+        else if (typeid(T) == typeid(int)) {
+          _winGlobData[1] = nTypeParam;
+        }
+        else if (typeid(T) == typeid(double)) {
+          _winGlobData[2] = nTypeParam;
+        }
 
         if (winTypeParamIdxValueData != NULL) {
           MPI_Win_unlock (_rootRankInGlobalComm, *winTypeParamIdxValue);
@@ -1972,7 +1980,7 @@ namespace cwipi {
     MPI_Win_unlock (_rootRankInGlobalComm, _winGlob);
 
     int nParam = 0;
-    if (typeid(T) == typeid(string)) {
+    if (typeid(T) == typeid(char *)) {
       nParam = nStrParam;
     }
     else if (typeid(T) == typeid(int)) {
@@ -2020,7 +2028,7 @@ namespace cwipi {
 
     MPI_Win_lock (MPI_LOCK_SHARED, _rootRankInGlobalComm, 0, _winGlob);
 
-    if (typeid(T) == typeid(string)) {
+    if (typeid(T) == typeid(char *)) {
       _updateStrValues();
     }
     else if (typeid(T) == typeid(int)) {
@@ -2066,7 +2074,7 @@ namespace cwipi {
     int  *winTypeParamIdxNameData = NULL;
     char *winTypeParamNameData = NULL;
 
-    if (typeid(T) == typeid(string)) {
+    if (typeid(T) == typeid(char *)) {
       nTypeParam               = nStrParam;
       winTypeParamIdxName      = &_winStrParamIdxName;
       winTypeParamName         = &_winStrParamName;
@@ -2170,7 +2178,7 @@ namespace cwipi {
         }
       }  while (lockStatus);
 
-      if (typeid(T) == typeid(string)) {
+      if (typeid(T) == typeid(char *)) {
 
         nTypeParam               = _winGlobData[3];
         winTypeParamIdxNameData  = _winStrParamIdxNameData;
@@ -2224,7 +2232,7 @@ namespace cwipi {
 
     else {
 
-      if (typeid(T) == typeid(string)) {
+      if (typeid(T) == typeid(char *)) {
 
         nTypeParam               = _winGlobData[3];
         winTypeParamIdxNameData  = _winStrParamIdxNameData;
