@@ -178,12 +178,12 @@ def run_coupling():
 
   parser.add_argument("-n1",
                       "--n_vtx_seg1",
-                      help="Number of vertices per side of the target domain",
+                      help="Number of vertices per side of the target domain. The total number of vertices is this number cubed (or squared in surface mode).",
                       type=int,
                       default=10)
   parser.add_argument("-n2",
                       "--n_vtx_seg2",
-                      help="Number of vertices per side of the source domain",
+                      help="Number of vertices per side of the source domain. The total number of vertices is this number cubed (or squared in surface mode).",
                       type=int,
                       default=10)
   parser.add_argument("-n_ov",
@@ -193,7 +193,7 @@ def run_coupling():
                       default=2)
   parser.add_argument("-part_method",
                       "--part_method",
-                      help="Partitioning method (1: ParMETIS, 2: PT-Scotch, 3: Hilbert)",
+                      help="Partitioning method (1: ParMETIS*, 2: PT-Scotch*, 3: Hilbert) (*: if available, see ParaDiGM install guide)",
                       type=int,
                       default=PDM._PDM_SPLIT_DUAL_WITH_HILBERT)
   parser.add_argument("-old",
