@@ -234,6 +234,11 @@ if (CWP_ENABLE_PYTHON_BINDINGS)
     test_python_create (python_new_api_client_server 2 CWP_LIST_TEST CWP_LIST_NRANK)
     add_dependencies(python_new_api_client_server cwp_server)
   endif()
+
+  if (NOT CWP_ENABLE_HIDE_PDM_SYMBOLS)
+    test_python_create (python_perfo_location_octree 2 CWP_LIST_TEST CWP_LIST_NRANK)
+    add_dependencies (python_perfo_location_octree pycwp)
+  endif()
 endif()
 
 add_subdirectory(tutorial)
