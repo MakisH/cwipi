@@ -1,12 +1,19 @@
+<p align="center">
+    <img src="doc/images/cwipiNew.svg" alt="Logo" width="25%"/>
+</p>
+
+
 # CWIPI #
 
 **CWIPI** (Coupling With Interpolation Parallel Interface) is a parallel coupling library under LGPL, with interfaces in C, Fortran and Python.
 
 ## Documentation  ##
 
-User documentation is deployed on the Gitlab pages server: https://numerics.gitlab-pages.onera.net/coupling/cwipi/cwipi-1.1.0/index.html
+The user documentation is available [here](https://onera.github.io/cwipi/index.html).
 
-## Build and install ##
+ONERA users can also access the documentation deployed on ONERA's [internal Gitlab pages server](https://numerics.gitlab-pages.onera.net/coupling/cwipi/cwipi-1.1.0/index.html).
+
+## Installation ##
 
 ### Dependencies
 
