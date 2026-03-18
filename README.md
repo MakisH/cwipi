@@ -45,7 +45,10 @@ Then, use the following commands:
 Please refer to the [installation guide](https://onera.github.io/cwipi/1.3.0/installation.html#installation) for more details about the CMake options.
 
 
+## Quick start ##
 
+You can find a basic example of two-way coupling using **CWIPI** in the [quick start section of the documentation](https://onera.github.io/cwipi/1.3.0/quick_start.html).
+Additional examples for more advanced scenarios can be found in the ``tests`` directory.
 
 ## Issues ##
 
@@ -54,7 +57,7 @@ Issues can be reported directly in the [Issues](https://gitlab.onera.net/numeric
 
 ## License ##
 
-**CWIPI** is available under the LGPL3 license (https://www.gnu.org/licenses/lgpl-3.0.fr.html).
+**CWIPI** is available under the [LGPL3 license](https://www.gnu.org/licenses/lgpl-3.0.fr.html).
 
 
 ## Copyright ##
