@@ -57,7 +57,7 @@ Issues can be reported directly in the [Issues](https://gitlab.onera.net/numeric
 
 ## License ##
 
-**CWIPI** is available under the [LGPL3 license](https://www.gnu.org/licenses/lgpl-3.0.fr.html).
+**CWIPI** is available under the [LGPL3 license](https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 
 ## Copyright ##
