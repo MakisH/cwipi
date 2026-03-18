@@ -5,7 +5,7 @@
 
 # CWIPI #
 
-**CWIPI** (Coupling With Interpolation Parallel Interface) is a parallel coupling library under LGPL, with interfaces in C, Fortran and Python.
+**CWIPI** (Coupling With Interpolation Parallel Interface) is a library for coupling parallel scientific codes via MPI communications to perform multi-physics simulations in massively parallel, distributed-memory environments, with interfaces in C, Python and Fortran.
 
 ## Documentation  ##
 
