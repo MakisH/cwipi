@@ -25,7 +25,7 @@ To maintain a clean and readable codebase, CWIPI follows professional standards.
 ### Specific Rules:
 * **Naming (C++):** Use `camelCase` for functions and variables.
 * **Naming (C):** Use `snake_case` for functions and variables to maintain consistency with standard C libraries.
-* **Indentation:** We use **2 spaces** per indentation level (no tabs). - 
+* **Indentation:** We use **2 spaces** per indentation level (no tabs). 
 * **Braces:** The opening brace `{` must be placed **at the end of the line** (not on a new line), as follows:
   ```cpp
   if (condition) {
