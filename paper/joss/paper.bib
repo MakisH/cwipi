@@ -10,7 +10,7 @@
   pages = {338-349},
   volume = {50},
   year = {2012},
-  doi = {https://doi.org/10.2514/1.J051110}
+  doi = {10.2514/1.J051110}
 }
 
 % --------------------------------
@@ -100,16 +100,19 @@
 % --- On-going work ---
 % ---------------------
 
-@inproceedings{Cazalbou2024,
-  author    = {Cazalbou, R. and Duchaine, F. and Qu{\'e}merais, E. and Andrieu, B. and Staffelbach, G. and Maugars, B.},
-  title     = {Hybrid Multi-GPU Distributed Octrees Construction for Massively Parallel Code Coupling Applications},
-  booktitle = {Proceedings of the Platform for Advanced Scientific Computing Conference},
-  series    = {PASC '24},
-  year      = {2024},
+  @inproceedings{Cazalbou2024,
+  author = {Cazalbou, R. and Duchaine, F. and Qu\'{e}merais, E. and Andrieu, B. and Staffelbach, G. and Maugars, B.},
+  title = {Hybrid Multi-GPU Distributed Octrees Construction for Massively Parallel Code Coupling Applications},
+  year = {2024},
+  isbn = {9798400706394},
   publisher = {Association for Computing Machinery},
-  address   = {Zurich, Switzerland},
-  pages     = {1--11},
-  doi       = {10.1145/3673038.3673133}
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3659914.3659928},
+  doi = {10.1145/3659914.3659928},
+  articleno = {14},
+  numpages = {11},
+  location = {Zurich, Switzerland},
+  series = {PASC '24}
 }
 
 @inproceedings{Francois2023,
@@ -160,13 +163,16 @@
 }
 
 @article{Tang2015,
-  author    = {Tang, Y.-H. and Kudo, S. and Bian, X. and Li, Z. and Karniadakis, G. E.},
-  title     = {Multiscale Universal Interface: A Concurrent Framework for Coupling Heterogeneous Solvers},
-  journal   = {Journal of Computational Physics},
-  year      = {2015},
-  volume    = {297},
-  pages     = {13--31},
-  doi       = {10.1016/j.jcp.2015.04.030}
+   title={Multiscale Universal Interface: A concurrent framework for coupling heterogeneous solvers},
+   author    = {Tang, Y.-H. and Kudo, S. and Bian, X. and Li, Z. and Karniadakis, G. E.},
+   volume={297},
+   ISSN={0021-9991},
+   url={http://dx.doi.org/10.1016/j.jcp.2015.05.004},
+   DOI={10.1016/j.jcp.2015.05.004},
+   journal={Journal of Computational Physics},
+   publisher={Elsevier BV},
+   year={2015},
+   month=sep, pages={13–31} 
 }
 
 @article{Fournier2020,
@@ -252,12 +258,15 @@
 % -----------------------------------------
 
 @article{Dellinger2023,
-  author  = {Dellinger, N. and Donjat, D. and Laroche, E. and Reulet, P.},
-  title   = {Experimental and numerical modelling of the interaction between a turbulent premixed propane/air flame and a composite flat plate},
-  journal = {Fire Safety Journal},
-  volume  = {141},
-  year    = {2023},
-  doi     = {https://doi.org/10.1016/j.firesaf.2023.103959}
+title = {Experimental and numerical modelling of the interaction between a turbulent premixed propane/air flame and a composite flat plate},
+journal = {Fire Safety Journal},
+volume = {141},
+pages = {103959},
+year = {2023},
+issn = {0379-7112},
+doi = {10.1016/j.firesaf.2023.103959},
+url = {https://www.sciencedirect.com/science/article/pii/S0379711223002278},
+author  = {Dellinger, N. and Donjat, D. and Laroche, E. and Reulet, P.},
 }
 
 % -----------------------------------------
@@ -274,7 +283,7 @@
 }
 
 @misc{nd922025,
-  author       = {nd-92},
+  author       = {nd-92, },
   title        = {{cwipiFoam: Coupling between compressible OpenFOAM solvers and Nektar++ AcousticSolver}},
   year         = {2025},
   howpublished = {GitHub repository},
@@ -350,14 +359,19 @@
 % --------------------
 
 @article{Refloch2011,
-  author  = {Refloch, A. and Courbet, B. and Murrone, A. and Villedieu, P. and Laurent, C. and Gilbank, P. and Troyes, J. and Tess{\'e}, L. and Chaineray, G. and Dargaud, J. B. and Qu{\'e}merais, E. and Vuillot, F.},
-  title   = {{CEDRE}: A Software Framework for Multiphysics Computational Fluid Dynamics},
-  journal = {AerospaceLab},
-  year    = {2011},
-  issue   = {2},
-  pages   = {1--13},
-  url     = {https://hal.science/hal-01183632},
-  note    = {HAL Id: hal-01183632, AL02-11}
+  TITLE = {{CEDRE Software}},
+  AUTHOR = {Refloch, A. and Courbet, B. and Murrone, A. and Villedieu, P. and Laurent, C. and Gilbank, P. and Troyes, J. and Tess{\'e}, L. and Chaineray, G. and Dargaud, J.B. and Qu{\'e}merais, E. and Vuillot, F.},
+  URL = {https://hal.science/hal-01182463},
+  JOURNAL = {{Aerospace Lab}},
+  PUBLISHER = {{Alain Appriou}},
+  NUMBER = {2},
+  PAGES = {p. 1-10},
+  YEAR = {2011},
+  MONTH = Mar,
+  KEYWORDS = {SOLVER ; FIELD ENERGETICS PROPULSION ; UNSTRUCTURED MESHING ; CEDRE},
+  PDF = {https://hal.science/hal-01182463v1/file/ISP1125.1316004171.pdf},
+  HAL_ID = {hal-01182463},
+  HAL_VERSION = {v1},
 }
 
 @article{Moureau2011,
@@ -371,26 +385,27 @@
   doi     = {10.1016/j.crme.2010.12.001}
 }
 
-@article{Cambier2011,
+@article{Cambier2013,
   author  = {Cambier, L. and Heib, S. and Plot, S.},
-  title   = {The {elsA} {S}oftware: a {M}ulti-purpose {P}latform for {C}omplex {C}omputational {A}erodynamics},
-  journal = {AerospaceLab},
-  number  = {2},
-  pages   = {1--15},
-  year    = {2011},
-  url     = {https://hal.science/hal-01183634},
+  title   = {The Onera elsA CFD software: input from research and feedback from industry},
+  journal = {Mechanics & Industry}, 
+  number  = {14},
+  pages   = {159--174},
+  year    = {2013},
+  doi     = {https://doi.org/10.1051/meca/2013056},
+  url     = {https://www.mechanics-industry.org/articles/meca/abs/2013/03/mi130017/mi130017.html},
   note    = {AL02-10}
 }
 
 @article{Schonfeld1999,
   author  = {Schonfeld, T. and Rudgyard, M.},
-  title   = {Steady and unsteady flow simulations using the hybrid unstructured {AVBP} solver},
+  title   = {Steady and unsteady flow simulations using the hybrid flow solver AVBP},
   journal = {AIAA Journal},
   volume  = {37},
   number  = {11},
   pages   = {1378--1385},
   year    = {1999},
-  doi     = {10.2514/2.639}
+  doi     = {10.2514/2.636}
 }
 
 @misc{AVBP_website,
@@ -401,37 +416,53 @@
   note   = {Accessed: 2026-02-13}
 }
 
-
-@article{Besson1997,
-  author  = {Besson, J. and Foerch, R.},
-  title   = {Large scale object-oriented numerical simulations of gas turbines},
-  journal = {Computers \& Structures},
-  volume  = {64},
-  number  = {5-6},
-  pages   = {1055--1067},
-  year    = {1997},
-  doi     = {10.1016/S0045-7949(97)00018-4}
+@inproceedings{Garaud2019,
+  TITLE = {{Z-set -suite logicielle pour la simulation des mat{\'e}riaux et structures}},
+  AUTHOR = {Garaud, JD. and Rannou, J. and Bovet, C. and Feld-Payet, S. and Chiaruttini, V. and Marchand, B. and Lacourt, L. and Yastrebov, V.A. and Osipov, N. and Quilici, S.},
+  URL = {https://hal.science/hal-02115875},
+  BOOKTITLE = {{14{\`e}me Colloque National en Calcul de Structures (CSMA 2019)}},
+  ADDRESS = {Presqu'{\^i}le de Giens, France},
+  YEAR = {2019},
+  MONTH = May,
+  PDF = {https://hal.science/hal-02115875v1/file/zset_giens2019.pdf},
+  HAL_ID = {hal-02115875},
+  HAL_VERSION = {v1},
 }
 
 @article{Delorme2005,
-  author  = {Delorme, Ph. and Mazet, P.-A. and Peyret, C. and Ventribout, Y.},
-  title   = {Computational Aeroacoustics Applications based on a Discontinuous Galerkin Method},
-  journal = {Comptes Rendus de l'Académie des Sciences - Series IIb - Mechanics},
-  year    = {2005},
-  volume  = {333},
-  pages   = {676--682},
-  month   = sep,
-  doi     = {https://doi.org/10.1016/j.crme.2005.07.007}
+  author       = {Delorme, Ph. and Mazet, P.-A. and Peyret, C. and Ventribout, Y.},
+title = {Computational aeroacoustics applications based on a discontinuous Galerkin method},
+journal = {Comptes Rendus Mécanique},
+volume = {333},
+number = {9},
+pages = {676-682},
+year = {2005},
+note = {Computational AeroAcoustics: from acoustic sources modeling to farfield radiated noise prediction},
+issn = {1631-0721},
+doi = {10.1016/j.crme.2005.07.007},
+url = {https://www.sciencedirect.com/science/article/pii/S1631072105001130},
 }
 
-
 @article{Dellinger2024,
-  author  = {Dellinger, N. and Leplat, G. and Huchette, C. and Biasi, V. and Feyel, F.}
-  title   = {Numerical modeling and experimental validation of heat and mass transfer within decomposing carbon fibers/epoxy resin composite laminates},
-  journal = {International Journal of Thermal Sciences},
-  volume  = {201},
-  pages   = {109040},
-  year    = {2024},
-  issn    = {1290-0729},
-  doi     = {https://doi.org/10.1016/j.ijthermalsci.2024.109040},
+title = {Numerical modeling and experimental validation of heat and mass transfer within decomposing carbon fibers/epoxy resin composite laminates},
+journal = {International Journal of Thermal Sciences},
+volume = {201},
+pages = {109040},
+year = {2024},
+issn = {1290-0729},
+doi = {10.1016/j.ijthermalsci.2024.109040},
+url = {https://www.sciencedirect.com/science/article/pii/S1290072924001625},
+author = {Dellinger, N. and Leplat, G. and Huchette, C. and Biasi, V. and Feyel, F.}
+}
+
+@article{Cantwell2015,
+title = {Nektar++: An open-source spectral/hp element framework},
+journal = {Computer Physics Communications},
+volume = {192},
+pages = {205-219},
+year = {2015},
+issn = {0010-4655},
+doi = {https://doi.org/10.1016/j.cpc.2015.02.008},
+url = {https://www.sciencedirect.com/science/article/pii/S0010465515000533},
+author = {Cantwell, C.D. and Moxey, D. and Comerford, A. and Bolis, A. and Rocco, G. and Mengaldo, G. and {De Grazia}, D. and Yakovlev, S. and  Lombard, J.-E. and  Ekelschot, D. and Jordi, B. and  Xu, H. and  Mohamied, Y. and  Eskilsson, C. and  Nelson, B. and  Vos, P. and  Biotto, C. and  Kirby, R.M. and  Sherwin, S.J.},
 }

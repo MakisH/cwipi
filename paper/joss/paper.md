@@ -61,12 +61,12 @@ The second research direction concerns the development of **temporal interpolati
 
 # Mentions
 
-From a scientific perspective, CWIPI is primarily used within the aeronautics and aerospace community from which it originated. The library is integrated into several software packages developed at ONERA, including elsA [@Cambier2011] for computational fluid dynamics, CEDRE [@Refloch2011] for multiphysics simulations, Z-set [@Besson1997] for structural and materials mechanics, MoDeTheC [@Dellinger2024] for thermal degradation of materials, and SPACE [@Delorme2005] for acoustic propagation. Through these tools, CWIPI enables advanced multiphysics simulations in aerothermodynamics [@Errera2019], aeroacoustics [@Langenais2019], magnetohydrodynamics (MHD) [@Rocamora2025], electric arc propagation and fire safety [@Dellinger2023].
+From a scientific perspective, CWIPI is primarily used within the aeronautics and aerospace community from which it originated. The library is integrated into several software packages developed at ONERA, including elsA [@Cambier2013] for computational fluid dynamics, CEDRE [@Refloch2011] for multiphysics simulations, Z-set [@Garaud2019] for structural and materials mechanics, MoDeTheC [@Dellinger2024] for thermal degradation of materials, and SPACE [@Delorme2005] for acoustic propagation. Through these tools, CWIPI enables advanced multiphysics simulations in aerothermodynamics [@Errera2019], aeroacoustics [@Langenais2019], magnetohydrodynamics (MHD) [@Rocamora2025], electric arc propagation and fire safety [@Dellinger2023].
 
 CWIPI is also employed as both an internal and external coupling library in leading combustion simulation environments such as YALES2 [@Moureau2011] and AVBP [@Schonfeld1999], where it supports efficient coupling between distinct physical models, meshes, and numerical resolutions.
 A notable HPC application [@Dombard2018], involving a complex geometry and combining CWIPI with AVBP, demonstrated the robustness and scalability of the coupling approach on massively parallel architectures. Its capabilities had already been highlighted as early as 2017 [@Duchaine2017] and are widely recognized by the community, as evidenced by the invitation to the ExCALIBUR workshop [@Andrieu2021]. CWIPI has also enabled recent work in aeroelasticity with YALES2 [@Fabbri2023]. This technological maturity is reflected by CWIPI's integration into the software stack of national facilities such as the CCRT, confirming its recognition at a national level within large-scale high-performance computing environments.
 
-Beyond its original ecosystem, the open-source community has also adopted CWIPI through GitHub-based interfacing projects, notably with OpenFOAM [@Weller1998; @MoratillaVega2022] and Nektar++ [@MoratillaVega2022; @nd922025]. These developments have enabled applications in aeroacoustics as well as data assimilation strategies with OpenFOAM [@Valero2026], illustrating the openness, flexibility, and growing impact of CWIPI within the broader multiphysics and HPC communities. Finally, CWIPI serves as the interpolation engine of the OpenPALM coupler [@Duchaine2015], a higher-level reference coupling tool, demonstrating its central role in the ecosystem of multiphysics coupled simulations.
+Beyond its original ecosystem, the open-source community has also adopted CWIPI through GitHub-based interfacing projects, notably [@MoratillaVega2022; @nd922025] with OpenFOAM [@Weller1998] and Nektar++ [@Cantwell2015]. These developments have enabled applications in aeroacoustics as well as data assimilation strategies with OpenFOAM [@Valero2026], illustrating the openness, flexibility, and growing impact of CWIPI within the broader multiphysics and HPC communities. Finally, CWIPI serves as the interpolation engine of the OpenPALM coupler [@Duchaine2015], a higher-level reference coupling tool, demonstrating its central role in the ecosystem of multiphysics coupled simulations.
 
 # Acknowledgements
 
@@ -83,8 +83,8 @@ The authors also wish to thank BPI France, the Directorate General for Civil Avi
 
 The contributions to this software are listed according to the CRediT taxonomy:
 
-- **E. Quémerais**: Conceptualization, Methodology, Software, Validation, Writing – Original Review & Editing, Project Administration, Funding Acquisition, Supervision
-- **B. Andrieu**: Software, Validation, Writing – Original Draft
-- **K. Hoogveld**: Software, Validation, Writing – Original Draft
+- **Eric Quémerais**: Conceptualization, Methodology, Software, Validation, Writing – Original Review & Editing, Project Administration, Funding Acquisition, Supervision
+- **Bastien Andrieu**: Software, Validation, Writing – Original Draft
+- **Karmijn Hoogveld**: Software, Validation, Writing – Original Draft
 
 # References
