@@ -21,7 +21,6 @@ endif ()
 if (CWP_ENABLE_EXTERNAL_PDM)
   if (CWP_ENABLE_SHARED)
     list(APPEND LINK_LIBRARIES
-          pdm::pdm_mpi_shared
           pdm::pdm_shared)
     if (CWP_ENABLE_Fortran)
       list(APPEND LINK_LIBRARIES
@@ -29,7 +28,6 @@ if (CWP_ENABLE_EXTERNAL_PDM)
     endif ()
   else ()
     list(APPEND LINK_LIBRARIES
-          pdm::pdm_mpi_static
           pdm::pdm_static)
     if (CWP_ENABLE_Fortran)
       list(APPEND LINK_LIBRARIES

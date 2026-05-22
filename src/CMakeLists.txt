@@ -45,10 +45,8 @@ endif()
 if (NOT CWP_ENABLE_EXTERNAL_PDM)
   file(GLOB_RECURSE SOURCESPDM
       ${PDM_SOURCE_DIR}/src/*.[ch])
-  list(FILTER SOURCESPDM EXCLUDE REGEX "pdm_no_mpi*")
   add_library(pdm OBJECT ${SOURCESPDM})
   list(APPEND PDM_INC ${PDM_SOURCE_DIR}/src
-                      ${PDM_SOURCE_DIR}/src/adapt
                       ${PDM_SOURCE_DIR}/src/algorithm
                       ${PDM_SOURCE_DIR}/src/exchange_protocol
                       ${PDM_SOURCE_DIR}/src/ext_wrapper

@@ -335,8 +335,6 @@ _gen_mesh
     memcpy((*elt_ln_to_gn)[ipart], numabs, sizeof(PDM_g_num_t) * (*n_elt)[ipart]);
   }
 
-  PDM_part_mesh_nodal_free(pmn);
-
   PDM_dcube_nodal_gen_free(dcube);
 
   PDM_multipart_free(mpart);
