@@ -11,13 +11,16 @@ stages:
 variables:
   CUSTOM_CI_BUILDS_DIR: $WORKDIR/test # inactif car option non activee dans la configuration du runner
   GIT_STRATEGY: none # don't do anything by default
+  BUILD_MAX_DURATION: "00:30:00"
+  TESTS_MAX_DURATION: "01:00:00"
+  SCHEDULER_PARAMETERS: "--partition=intel --cpus-per-task=1 --ntasks=1 --nodes=1-1 --time=00:30:00"
   # CI_DEBUG_TRACE: "true" #Uncomment to debug CI
 default:
   id_tokens:
     CI_JOB_JWT:
       aud: https://gitlab.onera.net
-  tags: #All jobs uses jamacar-slurm executor
-    - juno-shell
+  tags: # All jobs uses jacamar-slurm executor
+    - juno-slurm
 
 job:init_repo:
   variables:
@@ -65,17 +68,12 @@ job:build:
           - "intel-oneapi"
         BUILD_TYPE:
           - "Debug"
-      - COMPILER: "intel@2022"
-        MPI_LIB:
-          - "intel-oneapi"
-        BUILD_TYPE:
-          - "Debug"
   variables:
     MATRIX_KEY: _${COMPILER}_${MPI_LIB}_BUILD_${BUILD_TYPE}
+    SCHEDULER_PARAMETERS: "--partition=intel --cpus-per-task=1 --ntasks=12 --nodes=1-1 --time=${BUILD_MAX_DURATION}"
   stage: build
   before_script:
     - module purge
-    - echo "compilo = $COMPILER"
     - if   [ "${COMPILER}" == "gcc@15" ]; then
     -   source /tmp_user/juno/sonics/dist/socle_cfd7/source_gcc15_cython3.sh || true
     - elif [ "${COMPILER}" == "gcc@14" ]; then
@@ -84,7 +82,6 @@ job:build:
     -   source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=$COMPILER --mpi=$MPI_LIB || true
     - fi
   script:
-    - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
     - cd $CUSTOM_CI_DIR
     - mkdir -p build$MATRIX_KEY && cd build$MATRIX_KEY
     - if   [ "${COMPILER}" == "gcc@15" ]; then
@@ -95,14 +92,27 @@ job:build:
     -   cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON  -DCWP_ENABLE_STATIC=ON  -DCWP_ENABLE_HIDE_PDM_SYMBOLS=OFF -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON  -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON  ../
     - elif [ "${COMPILER}" == "gcc@10" ]; then
     -   cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON  -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_HIDE_PDM_SYMBOLS=ON  -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON  -DCWP_ENABLE_Fortran_MPI_MODULE=ON  -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON  ../
-    - elif [ "${COMPILER}" == "intel@2022" ]; then
-    -   cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON  -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_HIDE_PDM_SYMBOLS=ON  -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON  -DCWP_ENABLE_Fortran_MPI_MODULE=ON  -DCWP_ENABLE_DOCUMENTATION=ON  -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON  ../
     - elif [ "${COMPILER}" == "intel-llvm@2022" ]; then
     -   cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=OFF -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_HIDE_PDM_SYMBOLS=ON  -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=OFF -DCWP_ENABLE_Fortran_MPI_MODULE=OFF -DCWP_ENABLE_DOCUMENTATION=OFF -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=OFF ../
     - fi
     - make -j
 
+job:build_doc:
+  tags:
+    - juno-shell
+  stage: build
+  before_script:
+    - module purge
+    - source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=intel@2022 --mpi=intel-oneapi || true
+  script:
+    - cd $CUSTOM_CI_DIR
+    - mkdir -p build_intel@2022_intel-oneapi_BUILD_Debug && cd build_intel@2022_intel-oneapi_BUILD_Debug
+    - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCWP_ENABLE_EXTERNAL_PDM=OFF -DCWP_ENABLE_PYTHON_BINDINGS=ON -DCWP_ENABLE_STATIC=OFF -DCWP_ENABLE_HIDE_PDM_SYMBOLS=ON -DCWP_ENABLE_SHARED=ON -DCWP_ENABLE_Fortran=ON -DCWP_ENABLE_Fortran_MPI_MODULE=ON -DCWP_ENABLE_DOCUMENTATION=ON -DCWP_ENABLE_BLASLAPACK=OFF -DCWP_ENABLE_CLIENT_SERVER=ON ../
+    - make -j
+
 job:build_coverage:
+  variables:
+    SCHEDULER_PARAMETERS: "--partition=intel --cpus-per-task=1 --ntasks=12 --nodes=1-1 --time=${BUILD_MAX_DURATION}"
   stage: build
   before_script:
     - module purge
@@ -153,10 +163,10 @@ unit_test:cwipi:
           - "Debug"
   variables:
     MATRIX_KEY: _${COMPILER}_${MPI_LIB}_BUILD_${BUILD_TYPE}
+    SCHEDULER_PARAMETERS: "--partition=intel --cpus-per-task=1 --ntasks=12 --nodes=1-1 --time=${TESTS_MAX_DURATION}"
   stage: test
   before_script:
     - module purge
-    - echo "compilo = $COMPILER"
     - if   [ "${COMPILER}" == "gcc@15" ]; then
     -   source /tmp_user/juno/sonics/dist/socle_cfd7/source_gcc15_cython3.sh || true
     - elif [ "${COMPILER}" == "gcc@14" ]; then
@@ -165,33 +175,29 @@ unit_test:cwipi:
     -   source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=$COMPILER --mpi=$MPI_LIB || true
     - fi
   script:
-    - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
-    - export SLURM_EXACT=1
-    - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build$MATRIX_KEY
     - ./cwp_run -ics -timeout 5
 
 unit_test:clt-intel-oneapi:
   needs: [job:init_repo, job:build, unit_test:cwipi]
+  tags:
+    - juno-shell
   stage: test
   before_script:
     - module purge
     - source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=gcc@12 --mpi=intel-oneapi || true
   script:
-    - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
-    - export SLURM_EXACT=1
-    - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build_gcc@12_intel-oneapi_BUILD_Sanitize
     - ./cwp_run -incs -scs -timeout 5
 
 job:coverage_report:
+  tags:
+    - juno-shell
   stage: coverage
   before_script:
     - module purge
     - source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=gcc@12 --mpi=intel-oneapi || true
   script:
-    - export SLURM_EXACT=1
-    - export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
     - cd $CUSTOM_CI_DIR/build_coverage
     - ./cwp_run -scs -timeout 5
     - cd $CUSTOM_CI_DIR/build_coverage/src/CMakeFiles/cwp.dir/new
@@ -208,12 +214,13 @@ job:coverage_report:
           path: coverage.xml
 
 fake_install:
+  variables:
+    SCHEDULER_PARAMETERS: "--partition=intel --cpus-per-task=1 --ntasks=12 --nodes=1-1 --time=${BUILD_MAX_DURATION}"
   stage: test_install
   before_script:
     - module purge
     - source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=gcc@12 --mpi=intel-oneapi || true
   script:
-    - echo "Runner directory is $PWD; move to working directory $CUSTOM_CI_DIR"
     - cd $CUSTOM_CI_DIR
     - mkdir -p build_fake_install && cd build_fake_install
     - export CWIPI_INSTALL_ROOT=${PWD}/fake_install
@@ -228,8 +235,6 @@ pages:
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
-  before_script:
-    - ''
   script:
     - mkdir -p public
     - cp -r $CUSTOM_CI_DIR/build_intel@2022_intel-oneapi_BUILD_Debug/doc/sphinx/html public/dev
