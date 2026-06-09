@@ -3,7 +3,7 @@
 New CWIPI
 #########
 
-Released in 2023, this version relies on the parallel computational geometry library **ParaDiGM** which is developed by the same team as CWIPI.
+Released in 2023, this version relies on the parallel computational geometry library `ParaDiGM <https://github.com/onera/paradigm>`__ which is developed by the same team as CWIPI.
 
 General concepts
 ================
