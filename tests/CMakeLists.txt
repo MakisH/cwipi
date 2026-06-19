@@ -228,6 +228,9 @@ if (CWP_ENABLE_PYTHON_BINDINGS)
   test_python_create (python_new_api_vol_from_cellvtx 2 CWP_LIST_TEST CWP_LIST_NRANK)
   add_dependencies (python_new_api_vol_from_cellvtx pycwp)
 
+  test_python_create (python_new_api_conditioned_exchange 2 CWP_LIST_TEST CWP_LIST_NRANK)
+  add_dependencies (python_new_api_conditioned_exchange pycwp)
+
   if (CWP_ENABLE_CLIENT_SERVER)
     test_python_create (python_new_api_client_server 2 CWP_LIST_TEST CWP_LIST_NRANK)
     add_dependencies(python_new_api_client_server cwp_server)
