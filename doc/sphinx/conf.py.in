@@ -39,7 +39,6 @@ extensions = [
     'breathe',
     'sphinxfortran.fortran_domain',
     'sphinxfortran.fortran_autodoc',
-    'sphinxcontrib.tikz'
 ]
 
 
