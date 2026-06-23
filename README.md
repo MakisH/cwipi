@@ -38,7 +38,7 @@ Then, use the following commands:
 5. `cmake ..`
 6. `make`
 7. `make install`
-8. `./cwp_run` (if you want to run the test cases)
+8. `./cwp_run` (if you want to run the test cases, at least 10 CPU cores are required)
 
 
 <details>
