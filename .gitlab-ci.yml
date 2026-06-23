@@ -104,6 +104,7 @@ job:build_doc:
   before_script:
     - module purge
     - source /tmp_user/juno/sonics/dist/source_juno_all.sh --compiler=intel@2022 --mpi=intel-oneapi || true
+    - module load texlive
   script:
     - cd $CUSTOM_CI_DIR
     - mkdir -p build_intel@2022_intel-oneapi_BUILD_Debug && cd build_intel@2022_intel-oneapi_BUILD_Debug
