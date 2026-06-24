@@ -16,14 +16,50 @@ CWIPI C
 .. literalinclude:: ../../../tests/tutorial/c_new_api_polygon_sol.c
    :language: c
 
+Compilation:
+
+.. code-block:: sh
+
+  export CWIPI_INSTALL_DIR=<path>/<where>/<cwipi>/<is>/<installed>
+  mpicc -I$CWIPI_INSTALL_DIR/include -L$CWIPI_INSTALL_DIR/lib -o <exec> <file>.c -lcwp
+
+Execution:
+
+.. code-block:: sh
+
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CWIPI_INSTALL_DIR/lib/
+  mpirun -np 2 ./<exec>
+
+
 CWIPI Fortran
 -------------
 
 .. literalinclude:: ../../../tests/tutorial/fortran_new_api_polygon_sol.F90
    :language: fortran
 
+Compilation:
+
+.. code-block:: sh
+
+  export CWIPI_INSTALL_DIR=<path>/<where>/<cwipi>/<is>/<installed>
+  mpif90 -I$CWIPI_INSTALL_DIR/include -L$CWIPI_INSTALL_DIR/lib -o <exec> <file>.f90 -lcwpf -lcwp -cpp
+
+Execution:
+
+.. code-block:: sh
+
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CWIPI_INSTALL_DIR/lib/
+  mpirun -np 2 ./<exec>
+
+
 CWIPI Python
 ------------
 
 .. literalinclude:: ../../../tests/tutorial/python_new_api_polygon_sol.py
    :language: python
+
+.. code-block:: sh
+
+  export CWIPI_INSTALL_DIR=<path>/<where>/<cwipi>/<is>/<installed>
+  export PYTHONPATH=$CWIPI_INSTALL_DIR/lib/python3.8/site-packages:$PYTHONPATH # python version has to be adapted
+  mpirun -np 2 python3 <file>.py

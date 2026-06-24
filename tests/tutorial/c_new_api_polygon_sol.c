@@ -22,7 +22,6 @@
 #include <assert.h>
 
 #include "cwp.h"
-#include "cwp_priv.h"
 
 /*----------------------------------------------------------------------
  *
@@ -322,8 +321,8 @@ main(int argc, char *argv[]) {
               coupling_name);
 
   // free
-  CWP_UNUSED(n_uncomputed_tgts);
-  CWP_UNUSED(uncomputed_tgts);
+  (void)n_uncomputed_tgts;
+  (void)uncomputed_tgts;
   if (send_field_data != NULL) free(send_field_data);
   if (recv_field_data != NULL) free(recv_field_data);
   free(code_name);
