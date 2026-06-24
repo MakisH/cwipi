@@ -61,5 +61,5 @@ CWIPI Python
 .. code-block:: sh
 
   export CWIPI_INSTALL_DIR=<path>/<where>/<cwipi>/<is>/<installed>
-  export PYTHONPATH=$CWIPI_INSTALL_DIR/lib/python3.8/site-packages:$PYTHONPATH # python version has to be adapted
-  mpirun -np 2 python3 <file>.py
+  export PYTHONPATH=$CWIPI_INSTALL_DIR/lib/python<version>/site-packages:$PYTHONPATH
+  mpirun -np 2 python <file>.py
