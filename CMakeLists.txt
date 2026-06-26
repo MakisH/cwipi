@@ -25,7 +25,7 @@ set(CWP_CMAKE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_MODULE_PATH "${CWP_CMAKE_DIR}/modules;${CMAKE_CURRENT_SOURCE_DIR}/external/paradigm/cmake/modules")
 
 include(${CWP_CMAKE_DIR}/modules/cwp_version.cmake)
-project(CWP VERSION ${CWP_DEF_VERSION_MAJOR} LANGUAGES C CXX Fortran)
+project(CWP VERSION ${CWP_DEF_VERSION_MAJOR} LANGUAGES C CXX)
 
 set(CWP_VERSION "${CWP_VERSION_MAJOR}.${CWP_VERSION_MINOR}.${CWP_VERSION_PATCH}")
 
@@ -68,6 +68,10 @@ option(CWP_ENABLE_PYTHON_BINDINGS "Build Python module" OFF)
 option(CWP_ENABLE_Fortran "Build Shared Fortran Interface" OFF)
 
 option(CWP_ENABLE_Fortran_MPI_MODULE "Use Fortran MPI module" OFF)
+
+if (CWP_ENABLE_Fortran)
+  enable_language(Fortran)
+endif()
 
 # BLAS
 # ----
