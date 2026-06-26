@@ -615,6 +615,7 @@ namespace cwipi {
       }
 
       _compute_gnum = compute_gnum;
+
       PDM_MPI_Allreduce (&_compute_gnum, &compute_gnum, 1, PDM_MPI_INT, PDM_MPI_MAX,
                          _pdm_localComm);
 
@@ -664,6 +665,7 @@ namespace cwipi {
       }
 
       _compute_gnum = compute_gnum;
+
       PDM_MPI_Allreduce (&_compute_gnum, &compute_gnum, 1, PDM_MPI_INT, PDM_MPI_MAX,
                          _pdm_localComm);
 
@@ -737,6 +739,7 @@ namespace cwipi {
       }
 
       _compute_gnum = compute_gnum;
+
       PDM_MPI_Allreduce (&_compute_gnum, &compute_gnum, 1, PDM_MPI_INT, PDM_MPI_MAX,
                          _pdm_localComm);
 
@@ -922,6 +925,7 @@ namespace cwipi {
       }
 
       _compute_gnum = compute_gnum;
+
       PDM_MPI_Allreduce (&_compute_gnum, &compute_gnum, 1, PDM_MPI_INT, PDM_MPI_MAX,
                          _pdm_localComm);
 

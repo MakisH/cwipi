@@ -3310,6 +3310,12 @@ contains
       c_global_num = c_null_ptr
     endif
 
+    if (associated(coord)) then
+      c_coord = c_loc(coord)
+    else
+      c_coord = c_null_ptr
+    endif
+
     l_local_code_name = len(local_code_name)
     l_cpl_id = len(cpl_id)
 
