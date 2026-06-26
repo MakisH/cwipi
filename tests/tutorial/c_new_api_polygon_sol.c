@@ -1,22 +1,3 @@
-/*
-  This file is part of the CWIPI library.
-
-  Copyright (C) 2023  ONERA
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 3 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library. If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -30,8 +11,12 @@
  *---------------------------------------------------------------------*/
 
 int
-main(int argc, char *argv[]) {
-
+main
+(
+  int   argc,
+  char *argv[]
+)
+{
   // Initialize MPI
   MPI_Init(&argc, &argv);
   int i_rank;
@@ -97,9 +82,6 @@ main(int argc, char *argv[]) {
   int n_part = 1;
   const char  *coupling_name     = "code1_code2";
   const char **coupled_code_name = malloc(sizeof(char *) * n_code);
-  for (int i_code = 0; i_code < n_code; i_code++) {
-    coupled_code_name[i_code] = " ";
-  }
 
   if (I_am_code1) {
     coupled_code_name[0] = "code2";
