@@ -2901,6 +2901,9 @@ LocationToLocalMesh::compute_uvw(const cwipi_element_t elt_type,
     break;
 
   default:
+    n_elt_vertices = -1;
+    bftc_error(__FILE__, __LINE__, 0,
+               "compute_uvw : unknown element type\n");
     break;
 
   }
