@@ -19,7 +19,7 @@
 #include "cwipi_configf.h"
 
 program new_api
-#ifdef CWP_HAVE_FORTRAN_MPI_MODULE  
+#ifdef CWP_HAVE_FORTRAN_MPI_MODULE
     use mpi
 #endif
     use cwp
@@ -28,7 +28,7 @@ program new_api
 
 #ifndef CWP_HAVE_FORTRAN_MPI_MODULE
     include "mpif.h"
-#endif  
+#endif
 
     integer :: n_code
     integer :: ierr
@@ -92,6 +92,11 @@ program new_api
         code_names(1) = "code2";
         code_names(2) = "code3";
     end if
+
+    call CWP_Log_set_quiet(0)
+    call CWP_Log_set_quiet_console(0)
+    call CWP_Log_set_quiet_logfile(0)
+    call CWP_Log_set_level(CWP_LOG_TRACE)
 
     call CWP_Init(MPI_comm_world, n_code, code_names, is_active_rank, intra_comms)
 

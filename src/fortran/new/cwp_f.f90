@@ -197,6 +197,17 @@ module cwp
         CWPT_MESH_NODAL_N_ELEMENT_TYPES
     end enum
 
+    ! CWP_Log_t
+    enum, bind(c)
+        enumerator :: &
+                CWP_LOG_TRACE, &
+                CWP_LOG_DEBUG, &
+                CWP_LOG_INFO, &
+                CWP_LOG_WARN, &
+                CWP_LOG_ERROR, &
+                CWP_LOG_FATAL
+    end enum
+
     interface CWP_Param_set; module procedure &
       CWP_Param_set_int_, &
       CWP_Param_set_double_, &
@@ -784,6 +795,34 @@ module cwp
         implicit none
         type (c_ptr), value :: ptrC
       end subroutine CWPT_fortran_free_c
+
+      subroutine CWP_Log_set_level (level) &
+          bind (c, name = 'CWP_Log_set_level')
+        use iso_c_binding
+        implicit none
+        integer(c_int), value :: level
+      end subroutine CWP_Log_set_level
+
+      subroutine CWP_Log_set_quiet (enable) &
+          bind (c, name = 'CWP_Log_set_quiet')
+        use iso_c_binding
+        implicit none
+        integer(c_int), value :: enable
+      end subroutine CWP_Log_set_quiet
+
+      subroutine CWP_Log_set_quiet_console (enable) &
+          bind (c, name = 'CWP_Log_set_quiet_console')
+        use iso_c_binding
+        implicit none
+        integer(c_int), value :: enable
+      end subroutine CWP_Log_set_quiet_console
+
+      subroutine CWP_Log_set_quiet_logfile (enable) &
+          bind (c, name = 'CWP_Log_set_quiet_logfile')
+        use iso_c_binding
+        implicit none
+        integer(c_int), value :: enable
+      end subroutine CWP_Log_set_quiet_logfile
 
       subroutine CWP_Init_cf(fcomm, n_code, code_names, l_code_names, is_active_rank, intra_comms) &
               bind(c, name = 'CWP_Init_cf')

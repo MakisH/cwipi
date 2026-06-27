@@ -24,6 +24,7 @@
 #include <stdbool.h>
 
 #include "cwp.h"
+#include "cwp_logging.h"
 
 
 /*----------------------------------------------------------------------
@@ -112,6 +113,12 @@ main(int argc, char *argv[]) {
     code_names[0] = "code2";
     code_names[1] = "code3";
   }
+
+  CWP_Log_set_quiet(0);
+  CWP_Log_set_quiet_console(0);
+  CWP_Log_set_quiet_logfile(0);
+  CWP_Log_set_level(CWP_LOG_TRACE);
+  CWP_Log(CWP_LOG_DEBUG, "rank %d, n_code = %d\n", rank, n_code);
 
   char fileName[19];
   sprintf(fileName, "c_new_api_000%d.txt", rank);

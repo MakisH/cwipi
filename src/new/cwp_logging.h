@@ -10,7 +10,6 @@
 /* Standard C library headers */
 #include <stdio.h>
 #include <stdbool.h>
-
 /*-----------------------------------------------------------------------------*/
 
 #ifdef __cplusplus
@@ -28,44 +27,34 @@ extern "C" {
  * Public function prototypes
  *============================================================================*/
 
-typedef void (*log_lock_fn_cwp)(void *udata, int lock);
+typedef enum {
 
+  CWP_LOG_TRACE,
+  CWP_LOG_DEBUG,
+  CWP_LOG_INFO,
+  CWP_LOG_WARN,
+  CWP_LOG_ERROR,
+  CWP_LOG_FATAL
 
-// Log levels
-#define LVL_FATAL 200
-#define LVL_WARNING 150
-#define LVL_BASE 100
-#define LVL_INFO 50
-#define LVL_INFO2 20
-#define LVL_DEBUG 10
-#define LVL_DEBUG2 5
-#define cwp_logger(level, ...) _cwp_log(level, __func__, __FILE__, __LINE__, __VA_ARGS__)
-#define cwp_assert(condition, ...) _cwp_assert(condition, __func__, __FILE__, __LINE__, __VA_ARGS__)
-#define cwp_fail(...) _cwp_fail(__func__, __FILE__, __LINE__, __VA_ARGS__)
+} CWP_Log_t;
 
-void cwp_log_set_udata(void *udata);
-void cwp_log_set_lock(log_lock_fn_cwp fn);
-void cwp_log_set_fp(FILE *fp);
-void cwp_log_set_level(int level);
+#define CWP_Log(level, ...) _cwp_log(level, __func__, __FILE__, __LINE__, __VA_ARGS__)
+#define CWP_Log_assert(condition, ...) _cwp_log_assert(condition, __func__, __FILE__, __LINE__, __VA_ARGS__)
+#define CWP_Log_fail(...) _cwp_log_fail(__func__, __FILE__, __LINE__, __VA_ARGS__)
+
+void CWP_Log_set_level(int level);
+void CWP_Log_set_quiet(int enable);
+void CWP_Log_set_quiet_console(int enable);
+void CWP_Log_set_quiet_logfile(int enable);
 
 void _cwp_log(int level, const char* func, const char *file, int line, const char *fmt, ...);
 void _cwp_log_va(int level, bool add_line_break, const char* func, const char *file, int line, const char *fmt, va_list args);
-void _cwp_assert(bool condition, const char* func, const char *file, int line, const char *fmt, ...);
-void _cwp_fail(const char* func, const char *file, int line, const char *fmt, ...);
-
-void cwp_log_set_active_logging_on_rank(bool);
-void cwp_log_set_active_file_logging_on_rank(bool);
-void cwp_log_set_active_console_logging_on_rank(bool);
-
-const char* filename_without_path(const char*);
-
-void center_text(char *buffer, size_t buffer_size, int width, const char *text);
-
-// All functions begin with "cwp_" to ensure they are made accessible outside of CWIPI
+void _cwp_log_assert(bool condition, const char* func, const char *file, int line, const char *fmt, ...);
+void _cwp_log_fail(const char* func, const char *file, int line, const char *fmt, ...);
 
 /**
  *
- * \brief Pretty print of array in trace_log
+ * \brief Pretty print of array in log
  *
  * \param [in]    level        Log level
  * \param [inout] array        Array to print
@@ -73,11 +62,18 @@ void center_text(char *buffer, size_t buffer_size, int width, const char *text);
  * \param [inout] header       First line of log
  *
  */
-void cwp_log_array_int(int level, const int* array, const int larray, const char* header);
+void
+CWP_Log_array_int
+(
+ const int   level,
+ const int*  array,
+ const int   larray,
+ const char* header
+);
 
 /**
  *
- * \brief Pretty logging of array of doubles
+ * \brief Pretty print of array in log
  *
  * \param [in]    level        Log level
  * \param [inout] array        Array to print
@@ -85,12 +81,18 @@ void cwp_log_array_int(int level, const int* array, const int larray, const char
  * \param [inout] header       First line of log
  *
  */
-void cwp_log_array_double(int level, const double* array, const int larray, const char* header);
-
+void
+CWP_Log_array_double
+(
+ const int     level,
+ const double* array,
+ const int     larray,
+ const char*   header
+);
 
 /**
  *
- * \brief Pretty logging of array of "size_t" type
+ * \brief Pretty print of array in log
  *
  * \param [in]    level        Log level
  * \param [inout] array        Array to print
@@ -98,9 +100,14 @@ void cwp_log_array_double(int level, const double* array, const int larray, cons
  * \param [inout] header       First line of log
  *
  */
-void cwp_log_array_size_t(int level, const size_t *array, const int larray, const char *header);
-
-
+void
+CWP_Log_array_size_t
+(
+ const int     level,
+ const size_t *array,
+ const int     larray,
+ const char   *header
+);
 
 #ifdef __cplusplus
 }
