@@ -633,13 +633,11 @@ cdef extern from "cwp_logging.h":
       CWP_LOG_FATAL
 
   # --> functions about logging
-  void CWP_Log_set_level(int level);
+  void CWP_Log_level_set(int level);
 
-  void CWP_Log_set_quiet(int enable);
+  void CWP_Log_console_enable(int enable);
 
-  void CWP_Log_set_quiet_console(int enable);
-
-  void CWP_Log_set_quiet_logfile(int enable);
+  void CWP_Log_logfile_enable(int enable);
 
 #-----------------------------------------------------------------------------
 # ENUM
@@ -1028,45 +1026,35 @@ def output_file_set(output_file):
 
     CWP_Output_file_set(c_file)
 
-def log_set_level(int level):
+def log_level_set(int level):
     """
-    Define logging level.
+    Define logging level on local rank.
 
     Parameters:
       level (int) : Logging level
     """
 
-    CWP_Log_set_level(level)
+    CWP_Log_level_set(level)
 
-def log_set_quiet(int enable):
+def log_console_enable(int enable):
     """
-    Enable quiet logging on current rank.
+    Enable/disable console logging on local rank.
 
     Parameters:
-      enable (int) : Enable quiet logging on current rank.
+      enable (int) : Enable console logging on local rank (0 = quiet [default], 1 = verbose)
     """
 
-    CWP_Log_set_quiet(enable)
+    CWP_Log_console_enable(enable)
 
-def log_set_quiet_console(int enable):
+def log_logfile_enable(int enable):
     """
-    Enable quiet console logging on current rank.
+    Enable/disable logfile logging on local rank.
 
     Parameters:
-      enable (int) : Enable quiet console logging on current rank.
+      enable (int) : Enable logfile logging on local rank (0 = quiet [default], 1 = verbose)
     """
 
-    CWP_Log_set_quiet_console(enable)
-
-def log_set_quiet_logfile(int enable):
-    """
-    Enable quiet logfile logging on current rank.
-
-    Parameters:
-      enable (int) : Enable quiet logfile logging on current rank.
-    """
-
-    CWP_Log_set_quiet_logfile(enable)
+    CWP_Log_logfile_enable(enable)
 
 def user_structure_set(char * local_code_name,
                        object user_structure):

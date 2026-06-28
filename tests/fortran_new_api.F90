@@ -93,10 +93,9 @@ program new_api
         code_names(2) = "code3";
     end if
 
-    call CWP_Log_set_quiet(0)
-    call CWP_Log_set_quiet_console(0)
-    call CWP_Log_set_quiet_logfile(0)
-    call CWP_Log_set_level(CWP_LOG_TRACE)
+    call CWP_Log_console_enable(1)
+    call CWP_Log_logfile_enable(1)
+    call CWP_Log_level_set(CWP_LOG_TRACE)
 
     call CWP_Init(MPI_comm_world, n_code, code_names, is_active_rank, intra_comms)
 

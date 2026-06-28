@@ -78,28 +78,11 @@ static const char* _filename_without_path(const char* path) {
 
 static struct {
   int level;
-  int quiet;
-  int quiet_console;
-  int quiet_logfile;
-} L = {CWP_LOG_FATAL, 1, 1, 1};
+  int verbose_console;
+  int verbose_logfile;
+} L = {CWP_LOG_FATAL, 0, 0};
 
-void CWP_Log_set_level(int level) {
-  L.level = level;
-}
-
-void CWP_Log_set_quiet(int enable) {
-  L.quiet = enable ? 1 : 0;
-}
-
-void CWP_Log_set_quiet_console(int enable) {
-  L.quiet_console = enable ? 1 : 0;
-}
-
-void CWP_Log_set_quiet_logfile(int enable) {
-  L.quiet_logfile = enable ? 1 : 0;
-}
-
-void _cwp_log_va(int level, bool add_line_break, const char* func, const char *file, int line, const char *fmt, va_list args){
+static void _cwp_log_va(int level, bool add_line_break, const char* func, const char *file, int line, const char *fmt, va_list args){
 
   // Supress unused warning
   (void)(level);
@@ -107,7 +90,7 @@ void _cwp_log_va(int level, bool add_line_break, const char* func, const char *f
   (void)(file);
   (void)(line);
 
-  if (L.quiet_logfile == 0) {
+  if (L.verbose_logfile == 1) {
     if (logging_file == NULL) {
       char filename[50];
       int i_rank;
@@ -122,15 +105,27 @@ void _cwp_log_va(int level, bool add_line_break, const char* func, const char *f
     fflush(logging_file);
   }
 
-  if (L.quiet_console == 0) {
+  if (L.verbose_console == 1) {
     vfprintf(stdout, fmt, args);
     if (add_line_break) fprintf(stdout, "\n");
     fflush(stdout);
   }
 }
 
+void CWP_Log_level_set(int level) {
+  L.level = level;
+}
+
+void CWP_Log_console_enable(int enable) {
+  L.verbose_console = enable ? 1 : 0;
+}
+
+void CWP_Log_logfile_enable(int enable) {
+  L.verbose_logfile = enable ? 1 : 0;
+}
+
 void _cwp_log(int level, const char* func, const char *file, int line, const char *fmt, ...) {
-  if (L.quiet == 1 || level < L.level) {
+  if ((L.verbose_console == 0 && L.verbose_logfile == 0) || level < L.level) {
     return;
   }
 

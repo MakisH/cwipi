@@ -97,10 +97,9 @@ def runTest():
     f = open(f"python_api_{i_rank:04d}.txt", 'w')
     pycwp.output_file_set(f)
 
-    pycwp.log_set_quiet(0);
-    pycwp.log_set_quiet_console(0);
-    pycwp.log_set_quiet_logfile(0);
-    pycwp.log_set_level(pycwp.LOG_TRACE);
+    pycwp.log_console_enable(1);
+    pycwp.log_logfile_enable(1);
+    pycwp.log_level_set(pycwp.LOG_TRACE);
 
     # INIT
     f.write("pycwp.init:\n")

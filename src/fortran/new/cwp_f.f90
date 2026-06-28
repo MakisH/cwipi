@@ -796,33 +796,26 @@ module cwp
         type (c_ptr), value :: ptrC
       end subroutine CWPT_fortran_free_c
 
-      subroutine CWP_Log_set_level (level) &
-          bind (c, name = 'CWP_Log_set_level')
+      subroutine CWP_Log_level_set (level) &
+          bind (c, name = 'CWP_Log_level_set')
         use iso_c_binding
         implicit none
         integer(c_int), value :: level
-      end subroutine CWP_Log_set_level
+      end subroutine CWP_Log_level_set
 
-      subroutine CWP_Log_set_quiet (enable) &
-          bind (c, name = 'CWP_Log_set_quiet')
+      subroutine CWP_Log_console_enable (enable) &
+          bind (c, name = 'CWP_Log_console_enable')
         use iso_c_binding
         implicit none
         integer(c_int), value :: enable
-      end subroutine CWP_Log_set_quiet
+      end subroutine CWP_Log_console_enable
 
-      subroutine CWP_Log_set_quiet_console (enable) &
-          bind (c, name = 'CWP_Log_set_quiet_console')
+      subroutine CWP_Log_logfile_enable (enable) &
+          bind (c, name = 'CWP_Log_logfile_enable')
         use iso_c_binding
         implicit none
         integer(c_int), value :: enable
-      end subroutine CWP_Log_set_quiet_console
-
-      subroutine CWP_Log_set_quiet_logfile (enable) &
-          bind (c, name = 'CWP_Log_set_quiet_logfile')
-        use iso_c_binding
-        implicit none
-        integer(c_int), value :: enable
-      end subroutine CWP_Log_set_quiet_logfile
+      end subroutine CWP_Log_logfile_enable
 
       subroutine CWP_Init_cf(fcomm, n_code, code_names, l_code_names, is_active_rank, intra_comms) &
               bind(c, name = 'CWP_Init_cf')

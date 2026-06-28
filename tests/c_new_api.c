@@ -114,10 +114,9 @@ main(int argc, char *argv[]) {
     code_names[1] = "code3";
   }
 
-  CWP_Log_set_quiet(0);
-  CWP_Log_set_quiet_console(0);
-  CWP_Log_set_quiet_logfile(0);
-  CWP_Log_set_level(CWP_LOG_TRACE);
+  CWP_Log_console_enable(1);
+  CWP_Log_logfile_enable(1);
+  CWP_Log_level_set(CWP_LOG_TRACE);
   CWP_Log(CWP_LOG_DEBUG, "rank %d, n_code = %d\n", rank, n_code);
 
   char fileName[19];
