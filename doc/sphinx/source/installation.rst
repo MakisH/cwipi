@@ -10,7 +10,7 @@ General dependencies for building **CWIPI** are:
 
   * a C++ compiler (tested with :code:`gcc 10`, :code:`gcc 12`, :code:`intel 2022` and :code:`intel-llvm 22`)
   * `CMake <https://cmake.org/>`_ (version 3.16 or higher)
-  * an MPI distribution (tested on :code:`openmpi` and :code:`intel oneapi`)
+  * an MPI distribution (tested with :code:`openmpi` and :code:`intel oneapi`)
 
 Basic Installation
 ==================
