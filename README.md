@@ -13,7 +13,7 @@ User documentation is deployed on ONERA's internal GitLab pages server: https://
 General dependencies for building **CWIPI** are:
 - a C++ compiler (tested with `gcc 10, 12, 14, 15`, `intel-llvm 2022`)
 - [CMake](https://cmake.org/) (version 3.16 or higher)
-- an MPI distribution (tested on `openmpi`, `intel oneapi`)
+- an MPI distribution (tested with `openmpi`, `intel oneapi`)
 
 ### Basic Installation
 
