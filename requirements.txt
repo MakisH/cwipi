@@ -6,4 +6,3 @@ Cython
 # Sphinx documentation
 sphinx-fortran
 sphinx-rtd-theme
-sphinxcontrib-tikz

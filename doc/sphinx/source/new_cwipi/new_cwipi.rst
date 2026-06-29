@@ -70,8 +70,6 @@ C API documentation
 Fortran API documentation
 =========================
 
-:download:`Fortran documentation (pdf) <doc_cwp_fortran.pdf>`
-
 .. .. f:automodule:: cwp
 
 Initialization/Finalization
