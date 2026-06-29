@@ -112,6 +112,10 @@ static void _cwp_log_va(int level, bool add_line_break, const char* func, const 
   }
 }
 
+/*-----------------------------------------------------------------------------
+ * Public function prototypes
+ *-----------------------------------------------------------------------------*/
+
 void CWP_Log_level_set(int level) {
   L.level = level;
 }
