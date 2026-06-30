@@ -90,6 +90,9 @@ static void _cwp_log_va(int level, bool add_line_break, const char* func, const 
   (void)(file);
   (void)(line);
 
+  va_list args_copy;
+  va_copy(args_copy, args);
+
   if (L.verbose_logfile == 1) {
     if (logging_file == NULL) {
       char filename[50];
@@ -106,10 +109,12 @@ static void _cwp_log_va(int level, bool add_line_break, const char* func, const 
   }
 
   if (L.verbose_console == 1) {
-    vfprintf(stdout, fmt, args);
+    vfprintf(stdout, fmt, args_copy);
     if (add_line_break) fprintf(stdout, "\n");
     fflush(stdout);
   }
+
+  va_end(args_copy);
 }
 
 /*-----------------------------------------------------------------------------
