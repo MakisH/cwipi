@@ -197,6 +197,17 @@ module cwp
         CWPT_MESH_NODAL_N_ELEMENT_TYPES
     end enum
 
+    ! CWP_Log_t
+    enum, bind(c)
+        enumerator :: &
+                CWP_LOG_TRACE, &
+                CWP_LOG_DEBUG, &
+                CWP_LOG_INFO, &
+                CWP_LOG_WARN, &
+                CWP_LOG_ERROR, &
+                CWP_LOG_FATAL
+    end enum
+
     interface CWP_Param_set; module procedure &
       CWP_Param_set_int_, &
       CWP_Param_set_double_, &
@@ -784,6 +795,27 @@ module cwp
         implicit none
         type (c_ptr), value :: ptrC
       end subroutine CWPT_fortran_free_c
+
+      subroutine CWP_Log_level_set (level) &
+          bind (c, name = 'CWP_Log_level_set')
+        use iso_c_binding
+        implicit none
+        integer(c_int), value :: level
+      end subroutine CWP_Log_level_set
+
+      subroutine CWP_Log_console_enable (enable) &
+          bind (c, name = 'CWP_Log_console_enable')
+        use iso_c_binding
+        implicit none
+        integer(c_int), value :: enable
+      end subroutine CWP_Log_console_enable
+
+      subroutine CWP_Log_logfile_enable (enable) &
+          bind (c, name = 'CWP_Log_logfile_enable')
+        use iso_c_binding
+        implicit none
+        integer(c_int), value :: enable
+      end subroutine CWP_Log_logfile_enable
 
       subroutine CWP_Init_cf(fcomm, n_code, code_names, l_code_names, is_active_rank, intra_comms) &
               bind(c, name = 'CWP_Init_cf')

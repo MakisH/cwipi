@@ -119,6 +119,7 @@ endif()
 set (LIST_HEADER "")
 list(APPEND LIST_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/cwipi.h")
 list(APPEND LIST_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/new/cwp.h")
+list(APPEND LIST_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/new/cwp_logging.h")
 list(APPEND LIST_HEADER "${CMAKE_BINARY_DIR}/cwipi_config.h")
 
 if (CWP_ENABLE_Fortran)

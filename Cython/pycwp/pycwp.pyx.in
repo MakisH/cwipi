@@ -622,6 +622,23 @@ cdef extern from "cwp.h":
   CWP_Spatial_interp_t CWP_Cpl_spatial_interp_algo_get(char          *local_code_name,
                                                        char          *cpl_id)
 
+cdef extern from "cwp_logging.h":
+
+  ctypedef enum CWP_Log_t:
+      CWP_LOG_TRACE
+      CWP_LOG_DEBUG
+      CWP_LOG_INFO
+      CWP_LOG_WARN
+      CWP_LOG_ERROR
+      CWP_LOG_FATAL
+
+  # --> functions about logging
+  void CWP_Log_level_set(int level);
+
+  void CWP_Log_console_enable(int enable);
+
+  void CWP_Log_logfile_enable(int enable);
+
 #-----------------------------------------------------------------------------
 # ENUM
 
@@ -702,6 +719,13 @@ OP_SUM = CWP_OP_SUM
 
 PARTDATA_SEND = CWP_PARTDATA_SEND
 PARTDATA_RECV = CWP_PARTDATA_RECV
+
+LOG_TRACE = CWP_LOG_TRACE
+LOG_DEBUG = CWP_LOG_DEBUG
+LOG_INFO  = CWP_LOG_INFO
+LOG_WARN  = CWP_LOG_WARN
+LOG_ERROR = CWP_LOG_ERROR
+LOG_FATAL = CWP_LOG_FATAL
 
 #-----------------------------------------------------------------------------
 # UTILS
@@ -1001,6 +1025,36 @@ def output_file_set(output_file):
       c_file = fdopen(fd, mode)
 
     CWP_Output_file_set(c_file)
+
+def log_level_set(int level):
+    """
+    Define logging level on local rank.
+
+    Parameters:
+      level (int) : Logging level
+    """
+
+    CWP_Log_level_set(level)
+
+def log_console_enable(int enable):
+    """
+    Enable/disable console logging on local rank.
+
+    Parameters:
+      enable (int) : Enable console logging on local rank (0 = quiet [default], 1 = verbose)
+    """
+
+    CWP_Log_console_enable(enable)
+
+def log_logfile_enable(int enable):
+    """
+    Enable/disable logfile logging on local rank.
+
+    Parameters:
+      enable (int) : Enable logfile logging on local rank (0 = quiet [default], 1 = verbose)
+    """
+
+    CWP_Log_logfile_enable(enable)
 
 def user_structure_set(char * local_code_name,
                        object user_structure):
