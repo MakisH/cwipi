@@ -30,10 +30,6 @@ project(CWP VERSION ${CWP_DEF_VERSION_MAJOR} LANGUAGES C CXX Fortran)
 set(CWP_VERSION "${CWP_VERSION_MAJOR}.${CWP_VERSION_MINOR}.${CWP_VERSION_PATCH}")
 
 #------------------------------------------------------------------------------
-# Enable languages
-#------------------------------------------------------------------------------
-
-#------------------------------------------------------------------------------
 # User option Definition
 #------------------------------------------------------------------------------
 
@@ -107,10 +103,31 @@ option(CWP_ENABLE_DOCUMENTATION "Enable Sphinx documentation" OFF)
 
 option(CWP_ENABLE_TRAINING "Enable training Jupyter Notebooks" OFF)
 
-# Enable tests
-# ------------
+# Tests
+# -----
 
 option(CWP_ENABLE_TESTS "Enable Tests" ON)
+
+# Unit tests
+# ----------
+
+option(CWP_ENABLE_UNIT_TESTS "Enable Unit Tests" ON)
+
+if (CWP_ENABLE_UNIT_TESTS)
+
+  include(FetchContent)
+  FetchContent_Declare(
+    doctest
+    GIT_REPOSITORY https://github.com/doctest/doctest.git
+    GIT_TAG        v2.4.11
+  )
+  FetchContent_GetProperties(doctest)
+  if (NOT doctest_POPULATED)
+    FetchContent_Populate(doctest)
+    add_subdirectory(${doctest_SOURCE_DIR} ${doctest_BINARY_DIR})
+  endif()
+
+endif()
 
 # Hide ParaDiGM Library symbols into the CWIPI library.
 # This option is not available if a static library is genererated (CWP_ENABLE_STATIC)
@@ -292,7 +309,7 @@ CHECK_FUNCTION_EXISTS(snprintf HAVE_SNPRINTF)
 #------------------------------------------------------------------------------
 
 # Check MPI
-# ----------------------------------------------------
+# ---------
 
 if (CWP_ENABLE_Fortran)
   find_package(MPI REQUIRED COMPONENTS C CXX Fortran)
@@ -371,7 +388,7 @@ if (NOT (CWP_ENABLE_SHARED_Fortran_LIB OR CWP_ENABLE_STATIC_Fortran_LIB))
 endif()
 
 #------------------------------------------------------------------------------
-# Store variable in configure file
+# Store variables in configure file
 #------------------------------------------------------------------------------
 
 configure_file(cwp_config_priv.h.in "${CMAKE_CURRENT_BINARY_DIR}/config_priv.h")
@@ -426,14 +443,10 @@ if (CWP_ENABLE_EXTERNAL_PDM)
                HINTS $ENV{PDM_ROOT}
                )
 
-  #find_package(PARADIGM 2.8.0
-  #             REQUIRED COMPONENTS ${REQUIRED_COMPONENTS}
-  #             OPTIONAL_COMPONENTS PARADIGMA_LIBRARIES PARADIGMA_FORTRAN_LIBRARIES PARADIGM_NO_MPI_LIBRARIES)
-
 else ()
 
   # Global options
-  # ------
+  # --------------
 
   set(PDM_HAVE_CUDA OFF)
   set(PDM_HAVE_ANISO_AGGLO OFF)
