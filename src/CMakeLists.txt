@@ -129,17 +129,10 @@ if (CWP_ENABLE_Fortran)
   list(APPEND LIST_HEADERF "${CMAKE_CURRENT_BINARY_DIR}/cwp.mod")
 endif ()
 
-# Options du link
-# ---------------
-
-unset(LINK_LIBRARIES)
-
-if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
-  list(APPEND LINK_LIBRARIES "m")
-endif()
-
 # Add Fortran dependencies if Fortran is called in C
 # --------------------------------------------------
+
+unset(LINK_LIBRARIES)
 
 if ((NOT CWP_HAVE_NOT_FORTRAN_IN_C) AND FORTRAN_LIBRARIES)
   list(APPEND LINK_LIBRARIES ${FORTRAN_LIBRARIES})
