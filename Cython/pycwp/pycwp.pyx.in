@@ -1547,6 +1547,9 @@ cdef class PartData (object):
     cdef int                   n_part
     cdef int                  *n_elt
     cdef CWP_g_num_t        **_gnum_elt
+    cdef dict                  recv_part_data
+    cdef int                   n_recv
+    cdef int                   n_wait_recv
 
     # TODO: hide from user in documentation
     def __init__(self,
@@ -1577,6 +1580,11 @@ cdef class PartData (object):
         self.n_part    = len(gnum_elt)
         self.n_elt     = list_to_int_pointer([array.size for array in gnum_elt])
         self._gnum_elt = np_list_to_gnum_pointers(gnum_elt)
+
+        self.recv_part_data = dict()
+
+        self.n_recv = 0
+        self.n_wait_recv = 0
 
         CWP_Part_data_create(self.local_code_name,
                              self.cpl_id,
@@ -1650,7 +1658,11 @@ cdef class PartData (object):
                             s_data,
                             n_components,
                             _recv_data)
-        free(_recv_data)
+
+        capsule = PyCapsule_New(_recv_data, NULL, NULL)
+        self.recv_part_data[self.n_recv] = capsule
+
+        self.n_recv = self.n_recv + 1
 
     def wait_issend(self,
                     int exch_id):
@@ -1679,6 +1691,11 @@ cdef class PartData (object):
                                  self.cpl_id,
                                  self.part_data_id,
                                  exch_id)
+
+        cdef void *ptr = PyCapsule_GetPointer(self.recv_part_data[self.n_wait_recv], NULL)
+        free(ptr)
+
+        self.n_wait_recv = self.n_wait_recv + 1
 
 #-----------------------------------------------------------------------------
 # CALLBACK
