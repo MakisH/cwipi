@@ -93,6 +93,9 @@ To force the use of a list of libraries, use :
 #### Enable tests
     CWP_ENABLE_TESTS=<ON | OFF> (default : ON)
 
+#### Enable unit tests
+    CWP_ENABLE_UNIT_TESTS=<ON | OFF> (default : OFF)
+
 #### Enable documentation mode
     CWP_ENABLE_DOCUMENTATION=<ON | OFF> (default : OFF)
 
