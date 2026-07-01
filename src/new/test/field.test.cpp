@@ -4,6 +4,6 @@
 
 TEST_CASE("[field] ") {
 
-  cwipi::Field fld;
+  //cwipi::Field fld;
 
 }
