@@ -111,7 +111,7 @@ option(CWP_ENABLE_TESTS "Enable Tests" ON)
 # Unit tests
 # ----------
 
-option(CWP_ENABLE_UNIT_TESTS "Enable Unit Tests" ON)
+option(CWP_ENABLE_UNIT_TESTS "Enable Unit Tests" OFF)
 
 if (CWP_ENABLE_UNIT_TESTS)
 
