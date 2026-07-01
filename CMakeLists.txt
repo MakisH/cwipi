@@ -559,63 +559,67 @@ add_subdirectory(${CWP_CMAKE_DIR}/post-install)
 # Create CWP_run file
 #------------------------------------------------------------------------------
 
-string(REPLACE ";" " " PDM_LIST_TEST "${CWP_LIST_TEST}")
+if (CWP_ENABLE_TESTS)
 
-string(REPLACE ";" " " PDM_LIST_NRANK "${CWP_LIST_NRANK}")
+  string(REPLACE ";" " " PDM_LIST_TEST "${CWP_LIST_TEST}")
 
-set (PDM_RUN_PRELOAD "")
-set (PDM_RUN_LSAN "")
-set (PDM_RUN_UBSAN "")
-set (PDM_RUN_PYTHONPATH "")
-set (PDM_RUN_TIME "")
+  string(REPLACE ";" " " PDM_LIST_NRANK "${CWP_LIST_NRANK}")
 
-if (APPLE)
-  find_program(GNU_TIME NAMES gtime PATHS /usr/bin /opt)
-  set (PDM_RUN_TIME "${GNU_TIME}")
-else()
-  find_program(USR_TIME NAMES time PATHS /usr/bin)
-  set (PDM_RUN_TIME "${USR_TIME}")
-endif()
+  set (PDM_RUN_PRELOAD "")
+  set (PDM_RUN_LSAN "")
+  set (PDM_RUN_UBSAN "")
+  set (PDM_RUN_PYTHONPATH "")
+  set (PDM_RUN_TIME "")
 
-if (CMAKE_BUILD_TYPE STREQUAL "Sanitize")
-  execute_process(COMMAND gcc -print-file-name=libasan.so OUTPUT_VARIABLE PRELOAD_ASAN OUTPUT_STRIP_TRAILING_WHITESPACE)
-  set(PDM_RUN_LSAN "LSAN_OPTIONS=suppressions=${PROJECT_SOURCE_DIR}/external/paradigm/script/asan/asan.supp")
-  set(PDM_RUN_UBSAN "UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=0")
-  set(PDM_RUN_PRELOAD "LD_PRELOAD ${PRELOAD_ASAN}:${PROJECT_BINARY_DIR}/script/asan/fake_dlclose/libdlclose.so")
-  set(PDM_RUN_PRELOAD_SRUN "LD_PRELOAD=${PRELOAD_ASAN}:${PROJECT_BINARY_DIR}/script/asan/fake_dlclose/libdlclose.so")
-endif()
-
-if (CWP_ENABLE_EXTERNAL_PDM)
-  if(DEFINED ENV{PYTHONPATH})
-    set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython:$ENV{PYTHONPATH}")
+  if (APPLE)
+    find_program(GNU_TIME NAMES gtime PATHS /usr/bin /opt)
+    set (PDM_RUN_TIME "${GNU_TIME}")
   else()
-    set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython")
+    find_program(USR_TIME NAMES time PATHS /usr/bin)
+    set (PDM_RUN_TIME "${USR_TIME}")
   endif()
-else()
-  if(DEFINED ENV{PYTHONPATH})
-    set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython:${PROJECT_BINARY_DIR}/external/paradigm/Cython:$ENV{PYTHONPATH}")
+
+  if (CMAKE_BUILD_TYPE STREQUAL "Sanitize")
+    execute_process(COMMAND gcc -print-file-name=libasan.so OUTPUT_VARIABLE PRELOAD_ASAN OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(PDM_RUN_LSAN "LSAN_OPTIONS=suppressions=${PROJECT_SOURCE_DIR}/external/paradigm/script/asan/asan.supp")
+    set(PDM_RUN_UBSAN "UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=0")
+    set(PDM_RUN_PRELOAD "LD_PRELOAD ${PRELOAD_ASAN}:${PROJECT_BINARY_DIR}/script/asan/fake_dlclose/libdlclose.so")
+    set(PDM_RUN_PRELOAD_SRUN "LD_PRELOAD=${PRELOAD_ASAN}:${PROJECT_BINARY_DIR}/script/asan/fake_dlclose/libdlclose.so")
+  endif()
+
+  if (CWP_ENABLE_EXTERNAL_PDM)
+    if(DEFINED ENV{PYTHONPATH})
+      set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython:$ENV{PYTHONPATH}")
+    else()
+      set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython")
+    endif()
   else()
-    set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython:${PROJECT_BINARY_DIR}/external/paradigm/Cython")
+    if(DEFINED ENV{PYTHONPATH})
+      set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython:${PROJECT_BINARY_DIR}/external/paradigm/Cython:$ENV{PYTHONPATH}")
+    else()
+      set (PDM_RUN_PYTHONPATH "PYTHONPATH=${PROJECT_BINARY_DIR}/Cython:${PROJECT_BINARY_DIR}/external/paradigm/Cython")
+    endif()
   endif()
+
+  if(DEFINED ENV{PATH})
+    set (PDM_RUN_PATH "PATH=${PROJECT_BINARY_DIR}/bin:$ENV{PATH}")
+  else()
+    set (PDM_RUN_PATH "PATH=${PROJECT_BINARY_DIR}/bin")
+  endif()
+
+  configure_file(${PROJECT_SOURCE_DIR}/script/cwp_run.in "${PROJECT_BINARY_DIR}/cwp_run"
+                 @ONLY)
+
+  configure_file(${PROJECT_SOURCE_DIR}/script/cwp_run.in "${PROJECT_BINARY_DIR}/tests/cwp_run"
+                 @ONLY)
+
+  configure_file(${PROJECT_SOURCE_DIR}/external/paradigm/script/pdm_launch.in "${PROJECT_BINARY_DIR}/pdm_launch"
+                 @ONLY)
+
+  configure_file(${PROJECT_SOURCE_DIR}/external/paradigm/script/pdm_launch_python.in "${PROJECT_BINARY_DIR}/pdm_launch_python"
+                 @ONLY)
+
 endif()
-
-if(DEFINED ENV{PATH})
-  set (PDM_RUN_PATH "PATH=${PROJECT_BINARY_DIR}/bin:$ENV{PATH}")
-else()
-  set (PDM_RUN_PATH "PATH=${PROJECT_BINARY_DIR}/bin")
-endif()
-
-configure_file(${PROJECT_SOURCE_DIR}/script/cwp_run.in "${PROJECT_BINARY_DIR}/cwp_run"
-               @ONLY)
-
-configure_file(${PROJECT_SOURCE_DIR}/script/cwp_run.in "${PROJECT_BINARY_DIR}/tests/cwp_run"
-               @ONLY)
-
-configure_file(${PROJECT_SOURCE_DIR}/external/paradigm/script/pdm_launch.in "${PROJECT_BINARY_DIR}/pdm_launch"
-               @ONLY)
-
-configure_file(${PROJECT_SOURCE_DIR}/external/paradigm/script/pdm_launch_python.in "${PROJECT_BINARY_DIR}/pdm_launch_python"
-               @ONLY)
 
 #------------------------------------------------------------------------------
 # Coverage checks
