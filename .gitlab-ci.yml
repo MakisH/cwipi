@@ -237,8 +237,16 @@ pages:
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
   script:
-    - mkdir -p public
+    - rm -rf public
+    - mkdir public
+    - cp -r /tmp_user/juno/cwipi/usr/doc/html/* public/
     - cp -r $CUSTOM_CI_DIR/build_intel@2022_intel-oneapi_BUILD_Debug/doc/sphinx/html public/dev
+    - |
+      cat > public/index.html << EOF
+      <head>
+        <meta http-equiv='refresh' content='0; URL=dev/index.html'>
+      </head>
+      EOF
   artifacts:
     paths:
       - public

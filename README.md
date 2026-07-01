@@ -4,7 +4,7 @@
 
 ## Documentation  ##
 
-User documentation is deployed on ONERA's internal GitLab pages server: https://numerics.gitlab-pages.onera.net/coupling/cwipi/dev/index.html
+User documentation is deployed on ONERA's internal GitLab pages server: https://numerics.gitlab-pages.onera.net/coupling/cwipi/index.html
 
 ## Build and install ##
 
