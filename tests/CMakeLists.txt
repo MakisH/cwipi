@@ -44,6 +44,9 @@ else()
        "PATH=${CWP_BINARY_DIR}/bin:${PATH}")
 endif()
 
+set (MPIEXEC_MAX_NUMPROCS 2)
+set (MPIEXEC_EXECUTABLE mpirun)
+
 include(TestCreate)
 
 test_c_create (c_new_api 10 CWP_LIST_TEST CWP_LIST_NRANK)
