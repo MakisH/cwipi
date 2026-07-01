@@ -24,7 +24,6 @@ MPI_TEST_CASE("[coupling] - 2p - simple ", 2) {
     code_names[0] = "code2";
   }
 
-
   MPI_Comm *localComm = (MPI_Comm *) malloc(sizeof(MPI_Comm) * n_code);
 
   CWP_Init(test_comm,
