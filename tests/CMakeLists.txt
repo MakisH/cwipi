@@ -246,3 +246,12 @@ set (CWP_LIST_NRANK ${CWP_LIST_NRANK} PARENT_SCOPE )
 #endif ()
 #test_c_create (c_new_to_old_api_surf_P1P0_P0P1_poly 2 CWP_LIST_TEST CWP_LIST_NRANK)
 #test_c_create (c_ho_palm 2)
+#test_c_create (c_surf_coupling_P1P0_P0P1_surf_gen 2)
+#test_c_create (c_surf_coupling_P1P0_P0P1_curv 2)
+
+if(CWP_ENABLE_UNIT_TEST)
+  file(GLOB_RECURSE __test_files
+       CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../src/*.test.cpp")
+  test_cpp_unit_create(cwp_t_unit_test ${MPIEXEC_MAX_NUMPROCS} CWP_LIST_TEST CWP_LIST_NRANK SOURCES ${__test_files} )
+  target_link_libraries(cwp_t_unit_test PRIVATE ${LINK_LIBRARIES})
+endif()
