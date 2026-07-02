@@ -11,6 +11,7 @@ General dependencies for building **CWIPI** are:
   * a C++ compiler (tested with :code:`gcc 10, 12, 14, 15`, :code:`intel-llvm 2022`)
   * `CMake <https://cmake.org/>`_ (version 3.16 or higher)
   * an MPI distribution (tested with :code:`openmpi`, :code:`intel oneapi`)
+  * `gnu-time <https://formulae.brew.sh/formula/gnu-time>`_ on macOS (to run tests with `cwp_run`)
 
 Basic Installation
 ==================
