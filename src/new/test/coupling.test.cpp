@@ -1,4 +1,3 @@
-
 #include <vector>
 #include "doctest/doctest.h"
 #include "doctest/extensions/doctest_mpi.h"
