@@ -101,6 +101,18 @@ To force the use of a list of libraries
 
   DBLAS_LIBRARIES="<lib_1> ... <lib_n>"
 
+**Enable tests**
+
+.. code-block:: sh
+
+  CWP_ENABLE_TESTS=<ON | OFF> (default : ON)
+
+**Enable unit tests**
+
+.. code-block:: sh
+
+  CWP_ENABLE_UNIT_TESTS=<ON | OFF> (default : OFF)
+
 Compiler choice
 ===============
 

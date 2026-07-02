@@ -44,6 +44,9 @@ else()
        "PATH=${CWP_BINARY_DIR}/bin:${PATH}")
 endif()
 
+set (MPIEXEC_MAX_NUMPROCS 2)
+set (MPIEXEC_EXECUTABLE mpirun)
+
 include(TestCreate)
 
 test_c_create (c_new_api 10 CWP_LIST_TEST CWP_LIST_NRANK)
@@ -236,6 +239,13 @@ if (CWP_ENABLE_PYTHON_BINDINGS)
 endif()
 
 add_subdirectory(tutorial)
+
+if (CWP_ENABLE_UNIT_TESTS)
+  file(GLOB_RECURSE __test_files
+       CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../src/*.test.cpp")
+  test_cpp_unit_create(cwp_t_unit_test ${MPIEXEC_MAX_NUMPROCS} CWP_LIST_TEST CWP_LIST_NRANK SOURCES ${__test_files})
+  target_link_libraries(cwp_t_unit_test PRIVATE ${LINK_LIBRARIES})
+endif()
 
 set (CWP_LIST_TEST  ${CWP_LIST_TEST}  PARENT_SCOPE )
 set (CWP_LIST_NRANK ${CWP_LIST_NRANK} PARENT_SCOPE )
