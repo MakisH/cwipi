@@ -20,6 +20,7 @@
 */
 
 #include <stdint.h>
+#include <cstdint>
 #include "codeProperties.hxx"
 #include "couplingDB.hxx"
 
