@@ -2,7 +2,6 @@
     <img src="doc/images/cwipiNew.svg" alt="Logo" width="25%"/>
 </p>
 
-
 # CWIPI #
 
 **CWIPI** (Coupling With Interpolation Parallel Interface) is a library for coupling parallel scientific codes via MPI communications to perform multi-physics simulations in massively parallel, distributed-memory environments, with interfaces in C, Python and Fortran.
@@ -18,10 +17,14 @@ ONERA users can also access the documentation deployed on ONERA's [internal Gitl
 ### Dependencies
 
 General dependencies for building **CWIPI** are:
-- a C++ compiler (tested with `gcc 10`, `gcc 12`, `intel 2022` and `intel-llvm 22`)
+- a C++ compiler (tested with `gcc 10, 12, 14, 15`, `intel 2022`, `intel-llvm 2022`)
 - [CMake](https://cmake.org/) (version 3.16 or higher)
 - an MPI distribution (tested with `openmpi` and `intel oneapi`)
-- [gnu-time](https://formulae.brew.sh/formula/gnu-time) on macOS (to run tests with `cwp_run`)
+
+Specific **CWIPI** dependencies to run tests with `cwp_run` are:
+- `bc`
+- `awk`
+- [gnu-time](https://formulae.brew.sh/formula/gnu-time) on macOS
 
 ### Basic Installation
 
@@ -40,7 +43,6 @@ Then, use the following commands:
 6. `make`
 7. `make install`
 8. `./cwp_run` (if you want to run the test cases, at least 10 CPU cores are required)
-
 
 <details>
 
@@ -100,11 +102,10 @@ Additional examples for more advanced scenarios can be found in the ``tests`` di
 
 Issues can be reported directly in the [Issues](https://gitlab.onera.net/numerics/coupling/cwipi/-/issues) section.
 
-
 ## License ##
 
 **CWIPI** is available under the [LGPL3 license](https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 ## Copyright ##
 
-Copyright 2023, ONERA The French Aerospace Lab
+Copyright 2026, ONERA The French Aerospace Lab

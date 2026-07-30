@@ -576,7 +576,7 @@ add_subdirectory(${CWP_CMAKE_DIR}/post-install)
 # Create CWP_run file
 #------------------------------------------------------------------------------
 
-if (CWP_ENABLE_TESTS)
+if (CWP_ENABLE_TESTS OR CWP_ENABLE_UNIT_TESTS)
 
   string(REPLACE ";" " " PDM_LIST_TEST "${CWP_LIST_TEST}")
 
@@ -588,6 +588,8 @@ if (CWP_ENABLE_TESTS)
   set (PDM_RUN_PYTHONPATH "")
   set (PDM_RUN_TIME "")
 
+  find_program(USR_BC  NAMES bc  PATHS /usr/bin)
+  find_program(USR_AWK NAMES awk PATHS /usr/bin)
   if (APPLE)
     find_program(GNU_TIME NAMES gtime PATHS /usr/bin /opt)
     set (PDM_RUN_TIME "${GNU_TIME}")
