@@ -2,17 +2,13 @@
     <img src="doc/images/cwipiNew.svg" alt="Logo" width="25%"/>
 </p>
 
-# CWIPI #
-
 **CWIPI** (Coupling With Interpolation Parallel Interface) is a library for coupling parallel scientific codes via MPI communications to perform multi-physics simulations in massively parallel, distributed-memory environments, with interfaces in C, Python and Fortran.
 
-## Documentation ##
+## 📖 Documentation
 
-The user documentation is available [here](https://onera.github.io/cwipi/index.html).
+The user documentation is available either on [the GitHub page](https://onera.github.io/cwipi/index.html) or on [ONERA's internal Gitlab](https://numerics.gitlab-pages.onera.net/coupling/cwipi/index.html).
 
-ONERA users can also access the documentation deployed on ONERA's [internal Gitlab pages server](https://numerics.gitlab-pages.onera.net/coupling/cwipi/index.html).
-
-## Installation ##
+## 🛠️ Build and install
 
 ### Dependencies
 
@@ -21,10 +17,18 @@ General dependencies for building **CWIPI** are:
 - [CMake](https://cmake.org/) (version 3.16 or higher)
 - an MPI distribution (tested with `openmpi` and `intel oneapi`)
 
-Specific **CWIPI** dependencies to run tests with `cwp_run` are:
+To run **CWIPI** tests with `cwp_run`, additional dependencies are:
 - `bc`
 - `awk`
 - [gnu-time](https://formulae.brew.sh/formula/gnu-time) on macOS
+
+To build **CWIPI** Fortran API, additional dependencies are:
+- a Fortran 90 compiler
+
+To build **CWIPI** Python API, additional dependencies are:
+- `numpy`
+- `mpi4py`
+- `Cython`
 
 ### Basic Installation
 
@@ -74,9 +78,6 @@ Refer to [FindPython](https://cmake.org/cmake/help/latest/module/FindPython.html
 #### Build static library
     CWP_ENABLE_STATIC=<ON | OFF> (default : OFF)
 
-#### Enable MPI wrapper check
-    CWP_ENABLE_MPI_CHECK=<ON | OFF> (default : ON)
-
 #### Hide symbols of internal ParaDiGM library
     CWP_ENABLE_HIDE_PDM_SYMBOLS=<ON | OFF> (default : ON)
 
@@ -93,19 +94,19 @@ If [```CWP_ENABLE_HIDE_PDM_SYMBOLS=ON```](#hide-symbols-of-internal-paradigm-lib
 
 </details>
 
-## Quick start ##
+## 🚀 Quick start
 
-You can find a basic example of two-way coupling using **CWIPI** in the [quick start section of the documentation](https://onera.github.io/cwipi/1.3.0/quick_start.html).
+You can find a basic example of two-way coupling using **CWIPI** in the [quick start section of the documentation](#documentation).
 Additional examples for more advanced scenarios can be found in the ``tests`` directory.
 
-## Issues ##
+## 🤕 Issues
 
 Issues can be reported directly in the [Issues](https://gitlab.onera.net/numerics/coupling/cwipi/-/issues) section.
 
-## License ##
+## ⚖️ License
 
 **CWIPI** is available under the [LGPL3 license](https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
-## Copyright ##
+## © Copyright
 
 Copyright 2026, ONERA The French Aerospace Lab

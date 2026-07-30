@@ -12,11 +12,18 @@ General dependencies for building **CWIPI** are:
   * `CMake <https://cmake.org/>`_ (version 3.16 or higher)
   * an MPI distribution (tested with :code:`openmpi`, :code:`intel oneapi`)
 
-Specific **CWIPI** dependencies to run tests with `cwp_run` are:
-
+To run **CWIPI** tests with `cwp_run`, additional dependencies are:
   * `bc`
   * `awk`
-  * `gnu-time <https://formulae.brew.sh/formula/gnu-time>`_ on macOS (to run tests with `cwp_run`)
+  * `gnu-time <https://formulae.brew.sh/formula/gnu-time>`_ on macOS
+
+To build **CWIPI** Fortran API, additional dependencies are:
+  * a Fortran 90 compiler
+
+To build **CWIPI** Python API, additional dependencies are:
+  * `numpy`
+  * `mpi4py`
+  * `Cython`
 
 Basic Installation
 ==================
@@ -51,6 +58,7 @@ CMake general options
 .. code-block:: sh
 
   CWP_ENABLE_Fortran=<ON | OFF> (default : OFF)
+  CWP_ENABLE_Fortran_MPI_MODULE=<ON | OFF> (default : OFF)
 
 **Enable Python interface**
 
