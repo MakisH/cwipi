@@ -236,6 +236,7 @@ pages:
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
+  pages: True
   script:
     - rm -rf public
     - mkdir public
