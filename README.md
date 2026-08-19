@@ -23,12 +23,12 @@ To run **CWIPI** tests with `cwp_run`, additional dependencies are:
 - [gnu-time](https://formulae.brew.sh/formula/gnu-time) on macOS
 
 To build **CWIPI** Fortran API, additional dependencies are:
-- a Fortran 90 compiler
+- a Fortran 90 compiler (tested with `gfortran` based on `gcc 10, 12, 14, 15`, `intel 2022`, `intel-llvm 2022`)
 
 To build **CWIPI** Python API, additional dependencies are:
-- `numpy`
+- `numpy (1.x)`
 - `mpi4py`
-- `Cython`
+- `Cython (0.29.x, 3.x)`
 
 ### Basic Installation
 
@@ -81,7 +81,7 @@ Refer to [FindPython](https://cmake.org/cmake/help/latest/module/FindPython.html
 #### Hide symbols of internal ParaDiGM library
     CWP_ENABLE_HIDE_PDM_SYMBOLS=<ON | OFF> (default : ON)
 
-If [```CWP_ENABLE_STATIC=ON```](#build-static-library) then ```CWP_ENABLE_HIDE_PDM_SYMBOLS=OFF``` is forced
+If ```CWP_ENABLE_STATIC=ON``` then ```CWP_ENABLE_HIDE_PDM_SYMBOLS=OFF``` is forced
 
 #### Enable the use of external ParaDiGM library
     CWP_ENABLE_EXTERNAL_PDM=<ON | OFF> (default : OFF)
@@ -90,7 +90,7 @@ If ```CWP_ENABLE_EXTERNAL_PDM=ON```, you must define this variable to find ParaD
 
     PDM_SOURCE_DIR=<path> Where to find the base directory of ParaDiGM
 
-If [```CWP_ENABLE_HIDE_PDM_SYMBOLS=ON```](#hide-symbols-of-internal-paradigm-library) then ```CWP_ENABLE_EXTERNAL_PDM=OFF``` is forced
+If ```CWP_ENABLE_HIDE_PDM_SYMBOLS=ON``` then ```CWP_ENABLE_EXTERNAL_PDM=OFF``` is forced
 
 </details>
 
