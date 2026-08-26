@@ -75,7 +75,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'CWIPI'
-copyright = '2023, ONERA The French Aerospace Lab'
+copyright = '2026, ONERA The French Aerospace Lab'
 author = 'B. Andrieu, K. Hoogveld, E. Quémerais'
 
 # The version info for the project you're documenting, acts as replacement for
